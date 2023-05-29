@@ -1,7 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-image: url('img/loginfondo.jpg');
-
+  background-image: url('Img/LoginFondo.jpg');
 }
 
 h2 {
@@ -26,11 +25,11 @@ label {
   color: #262626;
 }
 
-input[type="text"],
+input[type="varchar"],
 input[type="password"] {
   width: 100%;
   padding: 8px;
-  border: 1px solid #dbdbdb;
+  border: 3px solid #dbdbdb;
   border-radius: 20px;
   margin-bottom: 20px;
   display: block;

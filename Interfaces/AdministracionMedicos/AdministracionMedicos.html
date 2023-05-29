@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <title>AdministracionMedicos</title>
+  <link rel="stylesheet" href="AdministracionMedicos.css">
+</head>
+<body>
+  <h2>Administracion Medicos</h2>
+  <form action="procesar_AdministracionMedicos.php" method="post">
+
+    <label>RFC: </label>
+    <input type=varchar name="rfcAM" required>
+    <br><br>
+
+    <label>Nombre(s): </label>
+    <input type=text name="nombre" required>
+    <br><br>
+
+    <label>Apellido P: </label>
+    <input type=text name="apellidoP" required>
+    <br><br>
+
+    <label>Apellido M: </label>
+    <input type=text name="apellidoM" required>
+    <br><br>
+
+    <label>Rol: </label>
+    <select name="rol">
+        <option value="adminMedico">Medico Administrador</option>
+        <option value="medico">Medico</option>
+    </select><br><br>
+
+    <input type="submit" value="Entrar">
+    <input type="button" value="Salir">
+  </form>
+</body>
+</html>  
