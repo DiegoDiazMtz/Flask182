@@ -8,8 +8,11 @@ body {
     margin-bottom: 20px;
   }
   
+  h3 {
+    margin-bottom: 20px;
+  }
+  
   form {
-    text-align: center;
     max-width: 500px;
     margin: 0 auto;
     padding: 40px;
@@ -25,28 +28,16 @@ body {
     color: #262626;
   }
   
-  input[type="varchar"],
-  input[type="text"],
-  input[type="password"] {
+  p {
     width: 100%;
     padding: 8px;
     border: 2px solid #dbdbdb;
     border-radius: 20px;
     margin-bottom: 20px;
-    display: block;
-    margin: 100 auto;
   }
   
-  select {
-    width: 103%; /* Establece el ancho del select al 103% del contenedor para compensar el borde */
-    padding: 8px; /* Agrega un relleno interno de 8 píxeles alrededor del select */
-    border: 3px solid #dbdbdb; /* Establece un borde de 3 píxeles con un color determinado */
-    border-radius: 20px; /* Agrega bordes redondeados al select */
-    margin-bottom: 20px; /* Establece un margen inferior de 20 píxeles para el select */
-  }
-
-  input[type="button"],
-  input[type="submit"] {
+  input[type="button"] {
+    text-align: center;
     width: 40%;
     padding: 8px;
     background-color: #3897f0;
@@ -55,10 +46,27 @@ body {
     font-weight: bold;
     border-radius: 20px;
     cursor: pointer;
+    margin: 0 auto; /* Centra horizontalmente los botones */
+    display: block; /* Convierte los botones en elementos de bloque para centrarlos */
+    margin-bottom: 10px; /* Establece un margen inferior de 10px para separar los botones */
   }
   
-  input[type="button"]:hover,
-  input[type="submit"]:hover {
+  input[type="button"]:hover {
     background-color: #357ae8;
   }
-
+  
+  .date-age-container {
+    display: flex;
+    width: 107%;
+  }
+  
+  .date-container,
+  .age-container {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid #dbdbdb;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+  

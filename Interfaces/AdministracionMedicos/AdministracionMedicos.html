@@ -4,23 +4,24 @@
   <link rel="stylesheet" href="AdministracionMedicos.css">
 </head>
 <body>
-  <h2>Administracion Medicos</h2>
   <form action="procesar_AdministracionMedicos.php" method="post">
+
+    <h2>Administracion Medicos</h2><br>
 
     <label>RFC: </label>
     <input type=varchar name="rfcAM" required>
     <br><br>
 
     <label>Nombre(s): </label>
-    <input type=text name="nombre" required>
+    <input type=text name="nombreMedico" required>
     <br><br>
 
     <label>Apellido P: </label>
-    <input type=text name="apellidoP" required>
+    <input type=text name="apellidoPMedico" required>
     <br><br>
 
     <label>Apellido M: </label>
-    <input type=text name="apellidoM" required>
+    <input type=text name="apellidoMMedico" required>
     <br><br>
 
     <label>Rol: </label>
@@ -29,7 +30,7 @@
         <option value="medico">Medico</option>
     </select><br><br>
 
-    <input type="submit" value="Entrar">
+    <input type="submit" value="Registrar">
     <input type="button" value="Salir">
   </form>
 </body>
