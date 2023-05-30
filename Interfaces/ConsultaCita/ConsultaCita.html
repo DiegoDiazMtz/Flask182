@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ConsultaCita</title>
+  <link rel="stylesheet" href="ConsultaCita.css">
+</head>
+<body>
+  <form action="procesar_ConsultaPaciente.php" method="post">
+
+    <h2>Filtrado por Fecha o Paciente</h2>
+
+    <label>Fecha: </label>
+    <select name="paciente">
+        <option value="Paciente1">Fecha 1</option>
+        <option value="Paciente1">Fecha 2</option>
+    </select><br><br>
+
+    <label>Paciente: </label>
+    <select name="paciente">
+        <option value="Paciente1">Paciente 1</option>
+        <option value="Paciente1">Paciente 2</option>
+    </select><br><br>
+
+    <table class="my-table">
+        <tr>
+          <th>Cita del paciente</th>
+          <th> Nombre del paciente</th>
+        </tr>
+        <tr>
+          <td>Datos del paciente 1</td>
+          <td><input type="submit" value="Imprimir"></td>
+        </tr>
+        <tr>
+          <td>Datos del paciente 2</td>
+          <td><input type="submit" value="Imprimir"></td>
+        </tr>
+        <tr>
+          <td>Datos del paciente 3</td>
+          <td><input type="submit" value="Imprimir"></td>
+        </tr>
+      </table><br><br>
+  </form>
+</body>
+</html>

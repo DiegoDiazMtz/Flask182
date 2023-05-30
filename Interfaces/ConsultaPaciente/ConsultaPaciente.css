@@ -67,6 +67,16 @@ body {
     border: 2px solid #dbdbdb;
     border-radius: 20px;
     margin-bottom: 20px;
-    margin-right: 10px;
+    margin-right: 30px;
   }
   
+  select {
+    display: block;
+    margin-bottom: 5px;
+    color: #262626;
+    width: 103%; /* Establece el ancho del select al 103% del contenedor para compensar el borde */
+    padding: 8px; /* Agrega un relleno interno de 8 píxeles alrededor del select */
+    border: 3px solid #dbdbdb; /* Establece un borde de 3 píxeles con un color determinado */
+    border-radius: 20px; /* Agrega bordes redondeados al select */
+    margin-bottom: 20px; /* Establece un margen inferior de 20 píxeles para el select */
+  }

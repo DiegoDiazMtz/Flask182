@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ExpedientePaciente</title>
+  <link rel="stylesheet" href="ExpedienteDiagnostico.css">
+</head>
+<body>
+  <form action="procesar_ExpedientePaciente.php" method="post">
+
+    <h2>Exploracion y Diagnostico</h2><br>
+
+    <label>Paciente: </label>
+    <select name="paciente">
+        <option value="Paciente1">Paciente 1</option>
+        <option value="Paciente1">Paciente 2</option>
+    </select><br><br>
+
+    <label>Nombre: </label>
+    <p>*Nombre del Paciente*</p><br>
+
+    <h3>Exploracion</h3><br>
+
+    <label>Fecha de la Cita: </label>
+    <p>*Fecha de la Cita*</p><br>
+
+    <label>Peso / Altura</label><br>
+    <div class="date-age-container">
+      <div class="date-container">*Peso*</div>
+      <div class="age-container">*Altura*</div>
+    </div>
+    <br>
+
+    <label>Temperatura / L/M</label><br>
+    <div class="date-age-container">
+      <div class="date-container">*Temperatura*</div>
+      <div class="age-container">*Latidos por minuto*</div>
+    </div>
+    <br>
+
+    <label>SO / Glucosa</label><br>
+    <div class="date-age-container">
+      <div class="date-container">*Saturacion de Oxigeno*</div>
+      <div class="age-container">*Glucosa*</div>
+    </div>
+    <br>
+
+    <div class="button-container">
+      <input type="button" value="Regresar">
+      <input type="button" value="Actualizar">
+      <input type="button" value="Borrar">
+    </div>
+
+    <h3>Diagnositico</h3><br>
+
+    <label>Diagnostico: </label>
+    <p>*Enfermedades del Paciente*</p><br>
+
+    <label>Tratamiento: </label>
+    <p>*Alergias del Paciente*</p><br>
+
+    <label>Estudio: </label>
+    <p>*Antecedentes del Paciente*</p><br>
+
+    <div class="button-container">
+      <input type="button" value="Regresar">
+      <input type="button" value="Actualizar">
+      <input type="button" value="Borrar">
+    </div>
+  </form>
+</body>
+</html>
