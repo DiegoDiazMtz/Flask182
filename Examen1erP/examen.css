@@ -1,0 +1,15 @@
+h1{
+    text-align: center;
+    color: #F3FF00;
+}
+
+td, th{
+    color: white;
+    text-align: center;
+}
+
+table{
+    background-image: url('img.jpg');
+    border-collapse: collapse;
+    width: 50%;
+}
