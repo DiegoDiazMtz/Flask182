@@ -11,5 +11,7 @@ td, th{
 table{
     background-image: url('img.jpg');
     border-collapse: collapse;
-    width: 50%;
+    width: 55%;
+    border: 5px solid #868686;
+    margin: 0 auto;
 }
