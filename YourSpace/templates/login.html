@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD YourSpace</title>
+    <link rel="stylesheet" href="/public/Index.css">
+</head>
+
+<body>
+    {%with mensajes= get_flashed_messages() %}
+        {%if mensajes%}
+            {%for msj in mensajes%}
+                <h3>{{ msj }}</h3>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
+
+
+    <br>
+    <br>
+    <h1>Login</h1>
+    <br>
+    
+    <form action="/ingresar" method="POST"> 
+        <p>User:</p>
+        <input type="text" name="username" placeholder="Username">
+        <p>Password:</p>
+        <input type="text" name="password" placeholder="Password">
+        <p>Rol:</p>
+        <select name="rol">                
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+        </select>
+        <br><br>
+        <button type="submit"> Iniciar </button>
+    </form>
+
+</body>
+</html>
