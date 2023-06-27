@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD YourSpace</title>
-    <link rel="stylesheet" href="/public/Index.css">
+    <link rel="stylesheet" href="/public/login.css">
 </head>
 
 <body>
@@ -17,25 +16,20 @@
         {%endif%}
     {%endwith%}
 
-
-    <br>
-    <br>
-    <h1>Login</h1>
-    <br>
-    
-    <form action="/ingresar" method="POST"> 
-        <p>User:</p>
-        <input type="text" name="username" placeholder="Username">
-        <p>Password:</p>
-        <input type="text" name="password" placeholder="Password">
-        <p>Rol:</p>
-        <select name="rol">                
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-        </select>
-        <br><br>
-        <button type="submit"> Iniciar </button>
-    </form>
+    <div class="container">
+        <h1 class="title">Login</h1>
+        <form action="/ingresar" method="POST"> 
+            <div class="form-group">
+                <label for="username">User:</label>
+                <input type="text" id="username" name="username" placeholder="Username">
+            </div><br>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password">
+            </div><br>
+            <button type="submit" class="btn-submit">Iniciar</button><br><br>
+        </form>
+    </div>
 
 </body>
 </html>
