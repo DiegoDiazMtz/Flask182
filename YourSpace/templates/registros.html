@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/registros.css">
+</head>
+
+<body>
+    {% with mensajes = get_flashed_messages() %}
+        {% if mensajes %}
+            {% for msj in mensajes %}
+                <h3>{{ msj }}</h3>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <h1 class="title">Registro</h1>
+        <form action="/registros" method="POST">
+            <div class="form-group">
+                <label for="username">User:</label>
+                <input type="text" id="username" name="username" placeholder="User">
+            </div><br>
+            <div class="form-group">
+                <label for="username">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+            </div><br>
+            <div class="form-group">
+                <label for="username">Primer Apellido:</label>
+                <input type="text" id="apellido1" name="apellidoP" placeholder="Primer Apellido">
+            </div><br>
+            <div class="form-group">
+                <label for="username">Segundo Apellido:</label>
+                <input type="text" id="apellido2" name="apellidoM" placeholder="Segundo Apellido">
+            </div><br>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password">
+            </div><br>
+            <input type="submit" value="Registrarse" class="btn-submit">
+        </form>
+    </div>
+</body>
+</html>

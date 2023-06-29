@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-    <link rel="stylesheet" href="/public/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Curso</title>
+  <link rel="stylesheet" href="/public/cursos.css">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <span>YourSpace</span>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar">
-            <button type="submit">Buscar</button>
-        </div>
-        <div class="user-actions">
-            <button class="upload-button">Subir video</button>
-        </div>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Inicio</a></li>
-        </ul>
-    </nav>
-    <main>
-        <div class="video-info">
-            <h2 class="title">Título del Video</h2>
-            <p class="author">Autor del Video</p>
-            <p class="views">1.5M visualizaciones</p>
-            <p class="description">Descripción del video Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at iaculis lectus, in tristique eros. Integer quis sem odio. Ut tristique congue purus in tristique. Donec blandit dictum erat. Pellentesque porta neque id augue iaculis rutrum.</p>
-        </div>
-    </main>
+  <header>
+    <div class="logo">
+      <span>YourSpace</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar">
+      <button type="submit">Buscar</button>
+    </div>
+    <div class="user-actions">
+      <a class="upload-button" href="{{ url_for('cursos') }}">Subir curso</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="upload-button" href="{{ url_for('perfil') }}">Perfil</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1 class="title">Registro de Curso</h1>
+    <form>
+      <div class="form-group">
+        <label for="materia">Materia:</label>
+        <input type="text" id="materia" name="materia" required>
+      </div><br>
+      <div class="form-group">
+        <label for="descripcionMateria">Descripción de la materia:</label><br>
+        <textarea id="descripcionMateria" name="descripcionMateria" rows="4" cols="50" required></textarea>
+      </div><br>
+      <div class="form-group">
+        <label for="descripcionTema">Descripción del tema:</label><br>
+        <textarea id="descripcionTema" name="descripcionTema" rows="4" cols="50" required></textarea>
+      </div><br>
+      <div class="form-group">
+        <label for="localizacion">Localización:</label><br>
+        <textarea id="localizacion" name="localizacion" rows="4" cols="50" required></textarea>
+      </div><br>
+      <button type="submit" class="btn-submit">Registrar Curso</button><br><br>
+    </form>
+  </div>
 </body>
 </html>

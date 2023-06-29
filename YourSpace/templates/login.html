@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +10,16 @@
 
 <body>
     {%with mensajes= get_flashed_messages() %}
-        {%if mensajes%}
-            {%for msj in mensajes%}
-                <h3>{{ msj }}</h3>
-            {%endfor%}
-        {%endif%}
+    {%if mensajes%}
+    {%for msj in mensajes%}
+    <h1 class="alert">{{ msj }}</h1>
+    {%endfor%}
+    {%endif%}
     {%endwith%}
 
     <div class="container">
         <h1 class="title">Login</h1>
-        <form action="/ingresar" method="POST"> 
+        <form action="/ingresar" method="POST">
             <div class="form-group">
                 <label for="username">User:</label>
                 <input type="text" id="username" name="username" placeholder="Username">
@@ -29,7 +30,12 @@
             </div><br>
             <button type="submit" class="btn-submit">Iniciar</button><br><br>
         </form>
+        <div class="register-link">
+            <p>¿No tienes una cuenta? <li><a href="{{ url_for('registros') }}">Registrarse</a></li>
+            </p>
+        </div>
     </div>
 
 </body>
+
 </html>

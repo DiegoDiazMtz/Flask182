@@ -21,6 +21,11 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.alert {
+    text-align: center;
+    color: #ffffff;
+}
+
 .title {
     text-align: center;
     color: #333333;

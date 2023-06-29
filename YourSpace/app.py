@@ -9,7 +9,8 @@ app.config['MYSQL_DB'] = "yourSpace"
 app.secret_key = 'mysecretkey'
 mysql = MySQL(app)
 
-#-------------------------------------------------------
+# -------------------------------------------------------
+
 
 @app.route('/')
 def login():
@@ -19,6 +20,11 @@ def login():
 @app.route('/index')
 def index():
     return render_template('index.html')
+
+
+@app.route('/registros')
+def registros():
+    return render_template('registros.html')
 
 
 @app.route('/ingresar', methods=['POST'])
@@ -36,33 +42,37 @@ def ingresar():
         if Vusername in usu and usu[Vusername] == Vpassword:
             session['username'] = Vusername
             return redirect(url_for('index'))
-        else: 
+        else:
             flash('Usuario o contraseña incorrectos')
             return redirect(url_for('login'))
     elif Vusername == 'pato_m':
         if Vusername in usu and usu[Vusername] == Vpassword:
             session['username'] = Vusername
             return redirect(url_for('index'))
-        else: 
+        else:
             flash('Usuario o contraseña incorrectos')
             return redirect(url_for('login'))
     else:
         flash('Usuario o contraseña incorrectos')
         return redirect(url_for('login'))
-    
+
 
 @app.route('/cursos')
 def cursos():
     return render_template('cursos.html')
 
 
-@app.route('/tendencias')
-def tendencias():
-    return render_template('tendencias.html')
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html')
 
 
-#-------------------------------------------------------
+@app.route('/historial')
+def historial():
+    return render_template('historial.html')
+
+
+# -------------------------------------------------------
 
 if __name__ == '__main__':
     app.run(port=1000, debug=True)
-
