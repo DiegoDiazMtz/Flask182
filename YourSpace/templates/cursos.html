@@ -20,10 +20,15 @@
       <a class="upload-button" href="{{ url_for('perfil') }}">Perfil</a>
     </div>
   </header>
-
+  <nav>
+    <ul>
+        <li><a href="{{ url_for('index') }}">Inicio</a></li>
+        <li><a href="{{ url_for('historial') }}">Historial</a></li>
+    </ul>
+</nav><br>
   <div class="container">
     <h1 class="title">Registro de Curso</h1>
-    <form>
+    <form><br><br><br><br>
       <div class="form-group">
         <label for="materia">Materia:</label>
         <input type="text" id="materia" name="materia" required>
