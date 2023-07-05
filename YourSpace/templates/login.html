@@ -19,7 +19,7 @@
 
     <div class="container">
         <h1 class="title">Login</h1>
-        <form action="/ingresar" method="POST">
+        <form action="/comprobar" method="POST">
             <div class="form-group">
                 <label for="username">User:</label>
                 <input type="text" id="username" name="username" placeholder="Username">
@@ -31,7 +31,7 @@
             <button type="submit" class="btn-submit">Iniciar</button><br><br>
         </form>
         <div class="register-link">
-            <p>¿No tienes una cuenta? <li><a href="{{ url_for('registros') }}">Registrarse</a></li>
+            <p>¿No tienes una cuenta? <li><a href='/registrarse'>Registrarse</a></li>
             </p>
         </div>
     </div>

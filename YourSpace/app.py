@@ -17,45 +17,56 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/comprobar', methods=['POST'])
+def comprobar():
+    if request.method == 'POST':
+        vnombreU = request.form['username']
+        vpass = request.form['password']
+
+        curC = mysql.connection.cursor()
+        curC.execute('select id from usuarios where nombreU=%s and pass =%s', (vnombreU, vpass))
+        consulta = curC.fetchone()
+
+        if consulta: 
+            return redirect(url_for('index'))
+        else: 
+            flash('No se encontró el usuario o contraseña')
+            return redirect(url_for('login'))
+
+
 @app.route('/index')
 def index():
     return render_template('index.html')
 
 
-@app.route('/registros')
+@app.route('/registros', methods=['POST'])
 def registros():
     if request.method == 'POST':
         vusuario = request.form['usuario']
         vnombre = request.form['nombre']
         vap = request.form['ap']
-        vam = request.form['ap']
+        vam = request.form['am']
         vpass = request.form['pass']
 
-        CS= mysql.connection.cursor()
-        CS.execute('insert into Personas (usuario, nombre, ap, am, pass) values (%s,%s,%s,%s,%s)', (vusuario, vnombre, vap, vam, vpass))
+        curReg = mysql.connection.cursor()
+        curReg.execute('insert into personas (nombreP, ap, am) value (%s, %s, %s)', (vnombre, vap, vam))
         mysql.connection.commit()
 
-    flash('Usuario creado correctamente')
+        curC = mysql.connection.cursor()
+        curC.execute('select id from personas where nombreP=%s and ap=%s and am=%s', (vnombre, vap, vam))
+        consulta = curC.fetchone()
+
+        curReg = mysql.connection.cursor()
+        curReg.execute('insert into usuarios (nombreU, pass, id_persona) value (%s, %s, %s)', (vusuario, vpass, consulta))
+        mysql.connection.commit()
+
+    flash('Usuario registrado correctamente')
+    return redirect(url_for('login'))
+
+
+@app.route('/registrarse')
+def registrarse():
     return render_template('registros.html')
-
-
-@app.route('/ingresar', methods=['POST'])
-def ingresar():
-    if request.method == 'POST':
-        vusuario = request.form['usuario']
-        vpass = request.form['pass']
-
-        CS= mysql.connection.cursor()
-        consulta = 'select usuario from Personas where usuario =%s and pass = %s'
-        CS.execute(consulta (vusuario, vpass))
-        resultado = CS.fetchone()
-        if resultado is not None:
-            flash('Usuario o Contraseña incorrecta')
-            return render_template('login.html')
-        else:
-            return render_template('index.html')
-        
-    return render_template('login.html')
 
 
 @app.route('/cursos')
@@ -63,14 +74,15 @@ def cursos():
     return render_template('cursos.html')
 
 
+@app.route('/historial')
+def historial():
+    return render_template('historial.html')
+
+
 @app.route('/perfil')
 def perfil():
     return render_template('perfil.html')
 
-
-@app.route('/historial')
-def historial():
-    return render_template('historial.html')
 
 
 # -------------------------------------------------------
