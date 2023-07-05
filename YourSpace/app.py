@@ -24,37 +24,38 @@ def index():
 
 @app.route('/registros')
 def registros():
+    if request.method == 'POST':
+        vusuario = request.form['usuario']
+        vnombre = request.form['nombre']
+        vap = request.form['ap']
+        vam = request.form['ap']
+        vpass = request.form['pass']
+
+        CS= mysql.connection.cursor()
+        CS.execute('insert into Personas (usuario, nombre, ap, am, pass) values (%s,%s,%s,%s,%s)', (vusuario, vnombre, vap, vam, vpass))
+        mysql.connection.commit()
+
+    flash('Usuario creado correctamente')
     return render_template('registros.html')
 
 
 @app.route('/ingresar', methods=['POST'])
 def ingresar():
     if request.method == 'POST':
-        Vusername = request.form['username']
-        Vpassword = request.form['password']
+        vusuario = request.form['usuario']
+        vpass = request.form['pass']
 
-    usu = {
-        'diego_d': '1234',
-        'pato_m': '4321'
-    }
-
-    if Vusername == 'diego_d':
-        if Vusername in usu and usu[Vusername] == Vpassword:
-            session['username'] = Vusername
-            return redirect(url_for('index'))
+        CS= mysql.connection.cursor()
+        consulta = 'select usuario from Personas where usuario =%s and pass = %s'
+        CS.execute(consulta (vusuario, vpass))
+        resultado = CS.fetchone()
+        if resultado is not None:
+            flash('Usuario o Contraseña incorrecta')
+            return render_template('login.html')
         else:
-            flash('Usuario o contraseña incorrectos')
-            return redirect(url_for('login'))
-    elif Vusername == 'pato_m':
-        if Vusername in usu and usu[Vusername] == Vpassword:
-            session['username'] = Vusername
-            return redirect(url_for('index'))
-        else:
-            flash('Usuario o contraseña incorrectos')
-            return redirect(url_for('login'))
-    else:
-        flash('Usuario o contraseña incorrectos')
-        return redirect(url_for('login'))
+            return render_template('index.html')
+        
+    return render_template('login.html')
 
 
 @app.route('/cursos')
