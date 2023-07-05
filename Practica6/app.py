@@ -62,36 +62,29 @@ def actualizar(id):
         Vanio = request.form['txtAnio']
 
         curAct = mysql.connection.cursor()
-        curAct.execute('update albums set titulo=%s, artista=%s, anio=%s where id=%s',
-                       (Vtitulo, Vartista, Vanio, id))
+        curAct.execute('update albums set titulo=%s, artista=%s, anio=%s where id=%s', (Vtitulo, Vartista, Vanio, id))
         mysql.connection.commit()
 
     flash('Album Actualizado Correctamente')
     return redirect(url_for('index'))
 
 
-@app.route('/borrar')
-def borrar():
-    curBorrar = mysql.connection.cursor()
-    curBorrar.execute('select * from albums where id=%s', (id,))
-    consultaId = curBorrar.fetchone()
+@app.route('/eliminar/<id>')
+def eliminar(id):
+    curEliminar = mysql.connection.cursor()
+    curEliminar.execute('select * from albums where id=%s', (id,))
+    consultaId = curEliminar.fetchone()
 
-    return render_template('editar.html', album=consultaId)
+    return render_template('eliminar.html', album=consultaId)
 
 
-@app.route('//<id>', methods=['POST'])
-def actualizar(id):
-    if request.method == 'POST':
-        Vtitulo = request.form['txtTitulo']
-        Vartista = request.form['txtArtista']
-        Vanio = request.form['txtAnio']
+@app.route('/borrar/<id>', methods=['POST'])
+def borrar(id):
+    curBorr = mysql.connection.cursor()
+    curBorr.execute('delete from albums where id = %s', (id,))
+    mysql.connection.commit()
 
-        curAct = mysql.connection.cursor()
-        curAct.execute('update albums set titulo=%s, artista=%s, anio=%s where id=%s',
-                       (Vtitulo, Vartista, Vanio, id))
-        mysql.connection.commit()
-
-    flash('Album Actualizado Correctamente')
+    flash('Album Eliminado Correctamente')
     return redirect(url_for('index'))
 
 
