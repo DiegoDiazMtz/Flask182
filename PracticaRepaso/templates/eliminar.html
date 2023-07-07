@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Eliminar Fruteria</title>
+</head>
+
+<body>
+    <center>
+        <br>
+        <h1>Eliminar Fruta </h1>
+        <br>
+        <br>
+        <h2>¿Estás seguro que quieres elimarlo? </h2>
+        <form action="/borrar/{{ frut.0 }}" method="POST">
+
+            <input type="text" name="fruta" value="{{ frut.1 }}" readonly>
+            <input type="text" name="temporada" value="{{ frut.2 }}" readonly>
+            <input type="number" step="0.01" name="precio" value="{{ frut.3 }}" readonly>
+            <input type="number" name="stock" value="{{ frut.4 }}">
+            
+            <button type="submit"> Borrar </button>
+
+        </form>
+
+    </center>
+</body>
+
+</html>
