@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    {%with mensajes= get_flashed_messages() %}
+    {%if mensajes%}
+    {%for msj in mensajes%}
+    <h1 class="alert">{{ msj }}</h1>
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+
+    <h1>Login</h1>
+    <form action="/comprobar" method="POST">
+        <label for="usuario">Usuario:</label>
+        <input type="text" name="usuario" placeholder="Usuario" required>
+        <br><br>
+        <label for="pass">Password:</label>
+        <input type="text" name="pass" placeholder="Password" required>
+        <br><br>
+
+        <button type="submit">Iniciar</button>
+    </form>
+
+    <br><br>
+    <label for="registrarse">¿No tienes una cuenta?</label>
+    <br><br>
+    <a href="/registrarse">Registrarse</a>
+
+</body>
+</html>

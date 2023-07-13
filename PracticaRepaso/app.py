@@ -18,20 +18,23 @@ mysql = MySQL(app)
 # Ruta index o ruta principal http://localhost:5000
 # La ruta se compone de nombre y función
 
-@app.route('/buscar')
+@app.route('/buscar', methods=['POST', 'GET'])
 def buscar():
     if request.method == 'POST':
         vbusqueda = request.form['busqueda']
 
         curBus = mysql.connection.cursor()
-        curBus.execute('select * from tbFrutas where nombre=%s', (vbusqueda))
+        curBus.execute('SELECT * FROM tbFrutas WHERE fruta LIKE %s', (f'%{vbusqueda}%',))
         consulta = curBus.fetchall()
         mysql.connection.commit()
-        if consulta == vbusqueda:
-            return render_template('menu.html', bus=consulta)
+
+        if consulta:
+            return render_template('menu.html', bus=consulta, search_query=vbusqueda)
         else:
-            flash('No se encontr´ninguna fruta')
+            flash('No se encontró ninguna fruta')
             return redirect(url_for('menu'))
+
+    return redirect(url_for('menu'))
 
 
 @app.route('/')

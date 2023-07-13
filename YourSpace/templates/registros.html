@@ -8,40 +8,35 @@
     <link rel="stylesheet" href="/public/registros.css">
 </head>
 
-<body>
-    {% with mensajes = get_flashed_messages() %}
-        {% if mensajes %}
-            {% for msj in mensajes %}
-                <h3>{{ msj }}</h3>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
-    <div class="container">
-        <h1 class="title">Registro</h1>
-        <form action="/registros" method="POST">
-            <div class="form-group">
-                <label for="username">User:</label>
-                <input type="text" id="username" name="usuario" placeholder="User">
-            </div><br>
-            <div class="form-group">
-                <label for="username">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
-            </div><br>
-            <div class="form-group">
-                <label for="username">Primer Apellido:</label>
-                <input type="text" id="apellido1" name="ap" placeholder="Primer Apellido">
-            </div><br>
-            <div class="form-group">
-                <label for="username">Segundo Apellido:</label>
-                <input type="text" id="apellido2" name="am" placeholder="Segundo Apellido">
-            </div><br>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="pass" placeholder="Password">
-            </div><br>
-            <button type="submit" value="Registrarse" class="btn-submit"> Registrarse </button>
-        </form>
-    </div>
+<body><div class="container">
+    <h1 class="title">Registro</h1>
+    <form action="/registros" method="POST">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" placeholder="Nombre" required>
+        </div><br>
+        <div class="form-group">
+            <label for="ap">Apellido Paterno:</label>
+            <input type="text" name="ap" placeholder="Apellido Paterno" required>
+        </div><br>
+        <div class="form-group">
+            <label for="am">Apellido Materno:</label>
+            <input type="text" name="am" placeholder="Apellido Materno" required>
+        </div><br>
+        <div class="form-group">
+            <label for="correo">Correo:</label>
+            <input type="text" name="correo" placeholder="Correo" required>
+        </div><br>
+        <div class="form-group">
+            <label for="usuario">Usuario:</label>
+            <input type="text" name="usuario" placeholder="Usuario" required>
+        </div><br>
+        <div class="form-group">
+            <label for="pass">Password:</label>
+            <input type="password" name="pass" placeholder="Password" required>
+        </div><br>
+        <button type="submit" value="Registrarse" class="btn-submit"> Registrarse </button>
+    </form>
+</div>
 </body>
 </html>

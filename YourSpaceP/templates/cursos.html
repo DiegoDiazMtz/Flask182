@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cursos</title>
+</head>
+<body>
+    <h1>Crear Curso</h1>
+    <form action="/crearcurso" method="POST">
+        <label for="tipo">Tipo</label>
+        <select name="tipo">
+            <option value="curso">Curso</option>
+            <option value="clase">Clase</option>
+            <option value="asesoria">Asesoria</option>
+        </select>
+        <br><br>
+        <label for="materia">Materia:</label>
+        <input type="text" name="materia" placeholder="Matematicas/BD/POO" required>
+        <br><br>
+        <label for="descripcion">Descripción de la Materia:</label>
+        <input type="text" name="descripcion" placeholder="Se verá integrales por cambio de varible" required>
+        <br><br>
+        <label for="fecha">Fecha y Hora:</label>
+        <input type="datetime-local" name="fechaHora">
+        <br><br>
+        <label for="lugar">Locación:</label>
+        <input type="text" name="lugar" placeholder="Al lado del edificio B" required>
+        <br><br>
+        <label for="material">Material para la clase:</label>
+        <input type="text" name="material" placeholder="Llevar calculadora" required>
+        <br><br>
+        <label for="espe">¿Alguna Especilidad que tengas en algún tema y/o materia adicional?</label>
+        <input type="text" name="espe" placeholder="Base de datos, POO, Integrales, etc." required>
+        <br><br>
+
+        <button type="submit">Crear Curso</button>
+    </form>
+
+</body>
+</html>

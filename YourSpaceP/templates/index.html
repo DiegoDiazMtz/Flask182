@@ -1,33 +1,11 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-    <link rel="stylesheet" href="/public/index.css">
+    <title>index</title>
 </head>
-
 <body>
-    <header>
-        <div class="logo">
-            <span>YourSpace</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar">
-            <button type="submit">Buscar</button>
-        </div>
-        <div class="user-actions">
-            <a href="/cursos">Subir Cursos</a>
-            <a href="/cursos">Perfil</a>
-        </div>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Inicio</a></li>
-            <li><a href="{{ url_for('historial') }}">Historial</a></li>
-        </ul>
-    </nav><br>
     {%with mensajes= get_flashed_messages() %}
     {%if mensajes%}
     {%for msj in mensajes%}
@@ -35,6 +13,11 @@
     {%endfor%}
     {%endif%}
     {%endwith%}
+
+    <a href="/cursos">Subir Cursos</a>
+
+    <h1>Feed</h1>
+    <br>
 
     <table>
         <thead>
@@ -71,5 +54,4 @@
     </table>
     
 </body>
-
 </html>
