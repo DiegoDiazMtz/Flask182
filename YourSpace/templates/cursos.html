@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,35 +27,53 @@
         <li><a href="{{ url_for('historial') }}">Historial</a></li>
     </ul>
 </nav><br>
-<h1>Crear Curso</h1>
-<form action="/crearcurso" method="POST">
-    <label for="tipo">Tipo</label>
+
+
+<form action="/crearcurso" method="POST" class="contenedor">
+  <h1>Crear Curso</h1><br>
+
+  <div class="form-group">
+    <label for="tipo">Tipo:</label>
     <select name="tipo">
-        <option value="curso">Curso</option>
-        <option value="clase">Clase</option>
-        <option value="asesoria">Asesoria</option>
+      <option value="curso">Curso</option>
+      <option value="clase">Clase</option>
+      <option value="asesoria">Asesoría</option>
     </select>
-    <br><br>
+  </div>
+
+  <div class="form-group">
     <label for="materia">Materia:</label>
     <input type="text" name="materia" placeholder="Matematicas/BD/POO" required>
-    <br><br>
+  </div>
+
+  <div class="form-group">
     <label for="descripcion">Descripción de la Materia:</label>
-    <input type="text" name="descripcion" placeholder="Se verá integrales por cambio de varible" required>
-    <br><br>
+    <input type="text" name="descripcion" placeholder="Se verá integrales por cambio de variable" required>
+  </div>
+
+  <div class="form-group">
     <label for="fecha">Fecha y Hora:</label>
     <input type="datetime-local" name="fechaHora">
-    <br><br>
+  </div>
+
+  <div class="form-group">
     <label for="lugar">Locación:</label>
     <input type="text" name="lugar" placeholder="Al lado del edificio B" required>
-    <br><br>
+  </div>
+
+  <div class="form-group">
     <label for="material">Material para la clase:</label>
     <input type="text" name="material" placeholder="Llevar calculadora" required>
-    <br><br>
-    <label for="espe">¿Alguna Especilidad que tengas en algún tema y/o materia adicional?</label>
-    <input type="text" name="espe" placeholder="Base de datos, POO, Integrales, etc." required>
-    <br><br>
+  </div>
 
-    <button type="submit">Crear Curso</button>
+  <div class="form-group">
+    <label for="espe">¿Alguna Especialidad que tengas en algún tema y/o materia adicional?</label>
+    <input type="text" name="espe" placeholder="Base de datos, POO, Integrales, etc." required>
+  </div>
+
+  <button type="submit">Crear Curso</button>
 </form>
+
+
 </body>
 </html>

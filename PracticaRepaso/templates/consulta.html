@@ -1,40 +1,41 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD Albums</title>
 </head>
-
 <body>
-    {%with mensajes= get_flashed_messages() %}
-    {%if mensajes%}
-    {%for msj in mensajes%}
+    {% with mensajes = get_flashed_messages() %}
+    {% if mensajes %}
+    {% for msj in mensajes %}
     <h3>{{ msj }}</h3>
-    {%endfor%}
-    {%endif%}
-    {%endwith%}
-
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
     <center>
+        <form action="/buscar" method="POST">
+            <input type="text" name="busqueda" placeholder="Buscar...">
+            <button type="submit">Buscar</button>
+        </form>
+
         <br>
         <br>
-        <h1>Frutas Guardadass</h1>
+        <h1>Frutas Guardadas</h1>
         <br>
         <table>
             <thead>
                 <tr>
-                    <td>id:</td>
-                    <td>Fruta:</td>
-                    <td>Temporada:</td>
-                    <td>Precio:</td>
-                    <td>Stock:</td>
+                    <th>ID:</th>
+                    <th>Fruta:</th>
+                    <th>Temporada:</th>
+                    <th>Precio:</th>
+                    <th>Stock:</th>
                 </tr>
             </thead>
             <tbody>
-                {%for frut in listFrutas%}
+                {% for frut in listFrutas %}
                 <tr>
                     <td>{{ frut.0 }}</td>
                     <td>{{ frut.1 }}</td>
@@ -42,10 +43,9 @@
                     <td>{{ frut.3 }}</td>
                     <td>{{ frut.4 }}</td>
                 </tr>
-                {%endfor %}
+                {% endfor %}
             </tbody>
         </table>
     </center>
 </body>
-
 </html>

@@ -1,3 +1,4 @@
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -130,21 +131,51 @@ nav ul li a {
 table {
     width: 90%;
     margin: 20px auto;
-    background-color: #FFFFFF;
-    border-radius: 30px;
+    
+    border-radius: 28px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
+
+table th:first-child {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+table th:last-child {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+table td:first-child {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+table td:last-child {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+
+
 
 th,
 td {
     padding: 10px;
     text-align: left;
     color: #000000;
-    border-radius: 30px;
-    
+    background-color: white;
 }
 
 thead {
-    background-color: #ff0000;
+    background-color: white;
     color: #FFFFFF;
+}
+  
+  table th,
+  table td {
+    padding: 10px;
+    border: 1px solid #ff0000;
+    border-width: 3px;
 }

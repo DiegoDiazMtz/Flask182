@@ -180,7 +180,12 @@ def historial():
 @app.route('/perfil')
 def perfil():
     if 'usuario' in session:  # Verificar si el usuario está en la sesión
-        return render_template('perfil.html')
+        Vusuario = session['usuario']
+        
+        cper = mysql.connection.cursor()
+        cper.execute('select concat(p.nombre," ", p.ap," ", p.am), correo, u.usuario from usuarios u inner join personas p on u.id_persona = p.id where u.usuario = %s', (Vusuario,))
+        VdatU = cper.fetchall()
+        return render_template('perfil.html', datosp = VdatU)
     else:
         return redirect(url_for('login'))
 

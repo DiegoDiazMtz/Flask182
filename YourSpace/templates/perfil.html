@@ -33,10 +33,12 @@
         <img src="https://img.freepik.com/vector-premium/dibujos-animados-perfil-mujer_18591-58476.jpg" alt="Profile Picture">
       </div>
       <div class="profile-info">
-        <h2 class="username">diego_d</h2>
-        <p class="name">Diego Díaz Martínez</p>
-        <p class="name">John Doe</p>
+        {% for x in datosp %}
+        <h2 class="username">{{ x[0] }}</h2>
+        <p class="name">{{ x[1] }}</p>
+        <p class="name">{{ x[2] }}</p>
         <p class="option"><a href="#">Cambiar Password</a></p>
+        {% endfor %}
       </div>
     </main>
   </div>
