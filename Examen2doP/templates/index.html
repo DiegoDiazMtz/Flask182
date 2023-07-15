@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+</head>
+<body>
+    <center>
+        {%with mensajes= get_flashed_messages() %}
+        {%if mensajes%}
+        {%for msj in mensajes%}
+        <h3>{{ msj }}</h3>
+        {%endfor%}
+        {%endif%}
+        {%endwith%}
+
+
+
+        <h1>Floreria</h1>
+        
+        <a href="/agregar">Ingresar una nueva flor</a>
+        <br><br>
+        <a href="/consulta">Consulta flores registradas</a>
+
+
+    </center>
+</body>
+</html>

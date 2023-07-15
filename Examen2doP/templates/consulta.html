@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta</title>
+</head>
+<body>
+    <center>
+        {%with mensajes= get_flashed_messages() %}
+        {%if mensajes%}
+        {%for msj in mensajes%}
+        <h3>{{ msj }}</h3>
+        {%endfor%}
+        {%endif%}
+        {%endwith%}
+
+        <form action="/buscar" method="POST">
+            <input type="text" name="busqueda" placeholder="Buscar...">
+            <button type="submit">Buscar</button>
+        </form>
+        <br><br>
+        
+        <table>
+            <thead>
+                <tr>
+                    <td>id:</td>
+                    <td>Flor:</td>
+                    <td>Cantidad:</td>
+                    <td>Precio:</td>
+                    <td>Actualizar:</td>
+                </tr>
+            </thead>
+            <tbody>
+                {%for f in listaFlores%}    
+                <tr>
+                    <td>{{ f[0] }}</td>
+                    <td>{{ f[1] }}</td>
+                    <td>{{ f[2] }}</td>
+                    <td>{{ f[3] }}</td>
+                    <td><a href="/editar">Editar</a></td>
+                </tr>
+                {%endfor %}
+            </tbody>
+        </table>
+
+    </center>
+</body>
+</html>
