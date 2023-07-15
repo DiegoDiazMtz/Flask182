@@ -83,8 +83,8 @@ def actualizar(id):
         cantidad = request.form['cantidad']
         precio = request.form['precio']
 
-        curAct = mysql.connection.cursor()
-        curAct.execute('update tbFlores set nombre=%s, cantidad=%s, precio=%s where id=%s', (nombre, cantidad, precio, id))
+        Cact = mysql.connection.cursor()
+        Cact.execute('update tbFlores set nombre=%s, cantidad=%s, precio=%s where id=%s', (nombre, cantidad, precio, id))
         mysql.connection.commit()
 
     flash('Flor Actualizada Correctamente')

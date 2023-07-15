@@ -9,14 +9,14 @@
     <center>
         <h1>Actualizar Flor</h1>
 
-        <form action="/actualizar" method="POST">
+        <form action="/actualizar/{{ flor[0] }}" method="POST">
 
             <label>Nombre de la Flor: </label>
-            <input type="text" name="nombre" placeholder="flor">
+            <input type="text" name="nombre" value="{{ flor[1] }}">
             <label>Cantidad: </label>
-            <input type="text" name="cantidad" placeholder="cantidad">
+            <input type="int" name="cantidad" value="{{ flor[2] }}">
             <label>Precio:</label>
-            <input type="text" name="precio" placeholder="precio">
+            <input type="int" name="precio" value="{{ flor[3] }}">
             
             <button type="input"> Actualizar Flor</button>
         </form>
