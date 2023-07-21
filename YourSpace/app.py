@@ -188,6 +188,11 @@ def perfil():
         return render_template('perfil.html', datosp = VdatU)
     else:
         return redirect(url_for('login'))
+    
+
+@app.route('/inscribirse')
+def inscribirse():
+    return
 
 
 @app.route('/cerrar_sesion')

@@ -5,38 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil de Usuario</title>
   <link rel="stylesheet" href="/public/perfil.css">
+  <link rel="stylesheet" href="/public/menu.css">
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <span>YourSpace</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </div>
-    <div class="search-bar">
-      <input type="text" placeholder="Buscar">
-      <button type="submit">Buscar</button>
-    </div>
-    <div class="user-actions">
-      <a class="upload-button" href="{{ url_for('cursos') }}">Subir curso</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a class="upload-button" href="{{ url_for('perfil') }}">Perfil</a>
-    </div>
-  </header>
-  <nav>
-    <ul>
-      <li><a href="{{ url_for('index') }}">Inicio</a></li>
-      <li><a href="{{ url_for('historial') }}">Historial</a></li>
-    </ul>
-  </nav>
-  <br>
+  <!-- Incluir la barra de menú -->
+  {% include 'menu.html' %}
+
   <div class="container">
     <main>
-      <div class="profile-picture">
-        <img src="https://img.freepik.com/vector-premium/dibujos-animados-perfil-mujer_18591-58476.jpg" alt="Profile Picture">
+      <div class="imagen">
+        <img src="https://img.freepik.com/vector-premium/dibujos-animados-perfil-mujer_18591-58476.jpg" alt="Profile Picture" style="max-width: 400px;">
       </div>
       <div class="profile-info">
         {% for x in datosp %}
         <h2 class="username">{{ x[0] }}</h2>
         <p class="name">{{ x[1] }}</p>
         <p class="name">{{ x[2] }}</p>
+        <p class="option"><a href="#">Cambiar Password</a></p>
         {% endfor %}
       </div>
     </main>
