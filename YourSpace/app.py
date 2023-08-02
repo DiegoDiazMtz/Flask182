@@ -1,6 +1,7 @@
 from flask import Flask, request, session, render_template, redirect, url_for, flash
 from flask_session import Session
 from flask_mysqldb import MySQL
+from datetime import datetime
 
 app = Flask(__name__, static_folder='public', template_folder='templates')
 app.config['MYSQL_HOST'] = "localhost"
@@ -67,7 +68,7 @@ def registros():
         pas = request.form['pass']
 
         Cper = mysql.connection.cursor()
-        Cper.execute('insert into personas (nombre, ap, am, correo) value (%s, %s, %s, %s)', (nombre, ap, am, correo))
+        Cper.execute('insert into personas (nombre, ap, am, correo) values (%s, %s, %s, %s)', (nombre, ap, am, correo))
         mysql.connection.commit()
 
         Csper = mysql.connection.cursor()
@@ -75,7 +76,7 @@ def registros():
         consulta = Csper.fetchone()
 
         Cusu = mysql.connection.cursor()
-        Cusu.execute('insert into usuarios (id_persona, usuario, pass) value (%s, %s, %s)', (consulta, usuario, pas))
+        Cusu.execute('insert into usuarios (id_persona, usuario, pass) values (%s, %s, %s)', (consulta, usuario, pas))
         mysql.connection.commit()
 
     flash('Usuario registrado correctamente')
@@ -111,7 +112,7 @@ def crearcurso():
             id_persona = Cper.fetchone()[0]
 
             Case = mysql.connection.cursor()
-            Case.execute('insert into asesores (id_persona) value (%s)', (id_persona,))
+            Case.execute('insert into asesores (id_persona) values (%s)', (id_persona,))
             mysql.connection.commit()
 
             Csase = mysql.connection.cursor()
@@ -119,7 +120,7 @@ def crearcurso():
             id_asesor = Csase.fetchone()[0]
 
             Cesp = mysql.connection.cursor()
-            Cesp.execute('insert into espe (espe) value (%s)', (espe,))
+            Cesp.execute('insert into espe (espe) values (%s)', (espe,))
             mysql.connection.commit()
 
             Csesp = mysql.connection.cursor()
@@ -127,7 +128,7 @@ def crearcurso():
             id_espe = Csesp.fetchone()[0]
 
             Cae = mysql.connection.cursor()
-            Cae.execute('insert into asesor_espe (id_asesor, id_espe) value (%s,%s)', (id_asesor, id_espe))
+            Cae.execute('insert into asesor_espe (id_asesor, id_espe) values (%s,%s)', (id_asesor, id_espe))
             mysql.connection.commit()
 
             Csae = mysql.connection.cursor()
@@ -135,7 +136,7 @@ def crearcurso():
             id_asesor_espe = Csae.fetchone()[0]
 
             Ctip = mysql.connection.cursor()
-            Ctip.execute('insert into tipos (tipo) value (%s)', (tipo,))
+            Ctip.execute('insert into tipos (tipo) values (%s)', (tipo,))
             mysql.connection.commit()
 
             Cstipo = mysql.connection.cursor()
@@ -143,7 +144,7 @@ def crearcurso():
             id_tipo = Cstipo.fetchone()[0]
 
             Cser = mysql.connection.cursor()
-            Cser.execute('insert into servicios (materia, id_tipo, descripcion) value (%s,%s,%s)', (materia, id_tipo, descripcion))
+            Cser.execute('insert into servicios (materia, id_tipo, descripcion) values (%s,%s,%s)', (materia, id_tipo, descripcion))
             mysql.connection.commit()
 
             Csser = mysql.connection.cursor()
@@ -151,7 +152,7 @@ def crearcurso():
             id_servicio = Csser.fetchone()[0]
 
             Csae = mysql.connection.cursor()
-            Csae.execute('insert into servicio_asesor_espe (id_servicio, id_asesor_espe, fecha, lugar) value (%s,%s,%s,%s)', (id_servicio, id_asesor_espe, fechaHora, lugar))
+            Csae.execute('insert into servicio_asesor_espe (id_servicio, id_asesor_espe, fecha, lugar) values (%s,%s,%s,%s)', (id_servicio, id_asesor_espe, fechaHora, lugar))
             mysql.connection.commit()
 
             Cssae = mysql.connection.cursor()
@@ -159,7 +160,7 @@ def crearcurso():
             id_servicio_asesor_espe = Cssae.fetchone()[0]
 
             Cmsae = mysql.connection.cursor()
-            Cmsae.execute('insert into material_servicio_asesor_espe (id_servicio_asesor_espe, material) value (%s,%s)', (id_servicio_asesor_espe, material))
+            Cmsae.execute('insert into material_servicio_asesor_espe (id_servicio_asesor_espe, material) values (%s,%s)', (id_servicio_asesor_espe, material))
             mysql.connection.commit()
 
             flash('Curso creado correctamente')
@@ -190,9 +191,54 @@ def perfil():
         return redirect(url_for('login'))
     
 
-@app.route('/inscribirse')
-def inscribirse():
-    return
+@app.route('/inscribirse/<id>')
+def inscribirse(id):
+    Csins = mysql.connection.cursor()
+    Csins.execute('select * from vw_info where id=%s', (id,))
+    idsins = Csins.fetchone()
+
+    return render_template('inscribirse.html', idins=idsins)
+
+@app.route('/inscribir/<id>', methods=['POST'])
+def inscribir(id):
+    if 'usuario' in session:  
+        if request.method == 'POST':
+            usuario = session['usuario']
+
+            carrera = request.form['carrera']  
+            cuatri = int(request.form['cuatri'])
+            time = datetime.now()
+
+            Ccar = mysql.connection.cursor()
+            Ccar.execute('insert into carreras (carrera) values (%s)', (carrera,))
+            mysql.connection.commit()
+
+            Cscar = mysql.connection.cursor()
+            Cscar.execute('select id from carreras where carrera=%s', (carrera,))
+            id_carrera = Cscar.fetchone()[0]
+
+            Cper = mysql.connection.cursor()
+            Cper.execute('select p.* from personas p join usuarios u on p.id = u.id_persona where u.usuario = %s', (usuario,))
+            id_persona = Cper.fetchone()[0]
+
+            Cest = mysql.connection.cursor()
+            Cest.execute('insert into estudiantes (id_carrera, id_persona, cuatri) values (%s,%s,%s)', (id_carrera, id_persona, cuatri,))
+            mysql.connection.commit()
+
+            Csest = mysql.connection.cursor()
+            Csest.execute('select id from estudiantes where id_carrera=%s and id_persona=%s and cuatri=%s', (id_carrera, id_persona, cuatri,))
+            id_estudiante = Csest.fetchone()[0]
+
+            Cins = mysql.connection.cursor()
+            Cins.execute('insert into servicio_estudiante (id_servicio, id_estudiante, fecha) values (%s,%s,%s)', (id, id_estudiante, time,))
+            mysql.connection.commit()
+
+            flash('Has sido inscrito correctamente')
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('login'))
+
+
 
 
 @app.route('/cerrar_sesion')

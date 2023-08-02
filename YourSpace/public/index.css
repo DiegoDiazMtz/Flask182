@@ -10,6 +10,7 @@ body {
     min-height: 100vh;
     align-items: center;
     justify-content: center;
+
 }
 
 header {
@@ -117,6 +118,16 @@ nav ul li a {
     }
 }
 
+
+h1 {
+    background-color: #ff0000;
+    border-radius: 30px;
+    padding: 5px 10px;
+    color: white;
+    border: 2px solid #000000;
+    display: inline-block;
+    text-align: center;
+  }
 
 table {
     width: 90%;

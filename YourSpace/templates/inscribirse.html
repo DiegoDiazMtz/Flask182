@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
     <link rel="stylesheet" href="/public/index.css">
+    <link rel="stylesheet" href="/public/cursos.css">
+
+
 </head>
 
 <body>
@@ -21,13 +24,14 @@
     {%endif%}
     {%endwith%}
 
-    <div class="container">
-        {% for cur in cursos %}
+    <div class="contenedor">
+
+        <h1>Curso seleccionado</h1>
         <div class="card">
             <div class="card-content">
                 <div class="card-header">
-                    <h3>Tipo: {{ cur[7] }}</h3>
-                    <h4>Materia: {{ cur[8] }}</h4>
+                    <h3>Tipo: {{ idins[7] }}</h3>
+                    <h4>Materia: {{ idins[8] }}</h4>
                 </div>
                 
                 <div class="card-body">
@@ -39,23 +43,47 @@
                         -->
                     </div>
                     <div class="contenidos">
-                    <p>Descripción de la Materia: {{ cur[9] }}</p>
-                    <p>Material: {{ cur[1] }}</p>
-                    <p>Fecha: {{ cur[2] }}</p>
-                    <p>Lugar: {{ cur[3] }}</p>
-                    <p>Usuario: {{ cur[5] }}</p>
-                    <p>Correo: {{ cur[6] }}</p>
-                    <p>Especialidad: {{ cur[4] }}</p>
+                    <p>Descripción de la Materia: {{ idins[9] }}</p>
+                    <p>Material: {{ idins[1] }}</p>
+                    <p>Fecha: {{ idins[2] }}</p>
+                    <p>Lugar: {{ idins[3] }}</p>
+                    <p>Usuario: {{ idins[5] }}</p>
+                    <p>Correo: {{ idins[6] }}</p>
+                    <p>Especialidad: {{ idins[4] }}</p>
                     </div>
                     <div class="btninscri">
-                    <a class="inscri" href="/inscribirse/{{ cur[0] }}"> inscribirse </a>                    
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
+        <center>
+        <h2>Antes de poder incribirte a este tipo de {{ idins[7] }}, es necesario llenes estos datos:</h2><br>
+        </center>
+      
+        <form action="/inscribir/{{ idins[0] }}" method="POST">
+            <div class="form-group">
+                <label for="carrera">Carrera:</label>
+                <input type="text" name="carrera" placeholder="Sistemas/Negocios..." required>
+            </div>
+
+            <div class="form-group">
+            <label for="cuatri">Cuatrimestre:</label>
+            <select name="cuatri">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Inscribirse</button>
+        </form>
     </div>
-    
 </body>
 
 </html>
