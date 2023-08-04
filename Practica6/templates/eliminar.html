@@ -5,19 +5,35 @@
 <body>
     <center>
         <br>
-        <h1>Eliminar Album </h1>
+        <h1 class="text-center mt-2 mb-2">Eliminar Album </h1>
         <br>
         <br>
-        <h2>¿Estás seguro que quieres elimarlo? </h2>
-        <form action="/borrar/{{ album.0 }}" method="POST">
+        <h2 class="text-center mt-2 mb-2">¿Estás seguro que quieres elimarlo? </h2>
+        
 
-            <input type="text" name="txtTitulo" value="{{ album.1 }}" readonly>
-            <input type="text" name="txtArtista" value="{{ album.2 }}" readonly>
-            <input type="number" name="txtAnio" value="{{ album.3 }}" readonly>
+        <div class="col-md-5 center">
+            <div class="card card-body">
+                <form action="/borrar/{{ album.0 }}" method="POST">
 
-            <button type="submit"> Borrar </button>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="txtTitulo" value="{{ album.1 }}" readonly>
+                    </div>
 
-        </form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="txtArtista" value="{{ album.2 }}" readonly>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="number" class="form-control" name="txtAnio" value="{{ album.3 }}" readonly>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger"> Borrar </button>
+                    </div>
+
+                </form>
+            </div><!-- card -->
+        </div>
 
     </center>
 {%endblock body%}
