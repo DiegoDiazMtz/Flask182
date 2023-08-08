@@ -199,14 +199,14 @@ def ccreado():
 
 @app.route('/perfil')
 def perfil():
-    if 'usuario' in session:  # Verificar si el usuario está en la sesión
+    if 'usuario' in session: 
         usuario = session['usuario']
         
         cper = mysql.connection.cursor()
         cper.execute('select concat(p.nombre," ", p.ap," ", p.am), correo, u.usuario from usuarios u inner join personas p on u.id_persona = p.id where u.usuario = %s', (usuario,))
-        datosp = cper.fetchall()
+        perfil = cper.fetchall()
 
-        return render_template('plantilla.html', perf=datosp)
+        return render_template('perfil.html', datosp=perfil)
     else:
         return redirect(url_for('login'))
     
@@ -338,17 +338,19 @@ def eliminarins(id):
         return redirect(url_for('login'))
     
 
-'''@app.route('/borrari/<id>', methods=['POST'])
-def borrar(id):
+@app.route('/borrarins/<id>', methods=['POST'])
+def borrarins(id):
     if 'usuario' in session:  
+
         curBorr = mysql.connection.cursor()
-        curBorr.execute('delete from material_servicio_asesor_espe where id=%s', (id,))
+        curBorr.execute('delete from servicio_estudiante where id=%s', (id,))
         mysql.connection.commit()
 
         flash('Has sido dado de baja Correctamente')
         return redirect(url_for('cinscrito'))
     else:
-        return redirect(url_for('login'))'''
+        return redirect(url_for('login'))
+    
 
 
 @app.route('/search', methods=['POST'])
