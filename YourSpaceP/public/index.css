@@ -1,0 +1,298 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(45deg, #0045ba, #ff0000, #cfcfcf);
+    background-size: auto;
+    background-position: center;
+    animation: gradientAnimation 10s ease infinite;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+
+}
+
+header {
+    background-color: #ff0000;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+}
+
+.search-bar input[type="text"] {
+    width: 200px;
+    padding: 5px;
+    border: none;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+
+.search-bar button[type="submit"] {
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+    color: #000000;
+    cursor: pointer;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.upload-button {
+    background-color: #ff0000;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+    color: #FFFFFF;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+nav {
+    background-color: #FFFFFF;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+.user-actions a {
+    background-color: #ff0000;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+    color: #FFFFFF;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+h1 {
+    background-color: #ff0000;
+    border-radius: 30px;
+    padding: 5px 10px;
+    color: white;
+    border: 2px solid #000000;
+    display: inline-block;
+    text-align: center;
+  }
+
+table {
+    width: 90%;
+    margin: 20px auto;
+    
+    border-radius: 28px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+table th:first-child {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+table th:last-child {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+table td:first-child {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+table td:last-child {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+
+
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    color: #000000;
+    background-color: white;
+}
+
+thead {
+    background-color: white;
+    color: #FFFFFF;
+}
+  
+  table th,
+  table td {
+    padding: 10px;
+    border: 1px solid #ff0000;
+    border-width: 3px;
+  }
+
+  /* Estilos para el contenedor que envuelve las cartas */
+/* Estilos para el contenedor que envuelve las cartas */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  
+  .cardc {
+    flex-basis: calc(70% - 10px);
+    margin: 5px;
+    border: 3px solid black;
+    border-radius: 30px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card img {
+    flex-basis: 30%;
+    max-width: 80%;
+    border-radius: 30px 30px 0 0;
+  }
+  
+  .card-body {
+    flex-basis: 60%;
+    padding: 10px;
+    flex-grow: 1;
+    display: flex; /* Cambiamos de 'column' a 'row' para mostrar los elementos en una fila */
+    flex-direction: row; /* Mostramos los elementos en una fila */
+    justify-content: space-evenly;
+   
+  }
+  
+  .card-c p {
+    width: 100%; /* Ajustamos el ancho para que los párrafos se muestren en la misma fila */
+    
+  }
+  
+  .card-g {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 2px solid black;
+    border-radius: 0 0 25px 25px;
+  }
+  
+  .card-g h3,
+  .card-g h4 {
+    margin: 1px 0;
+    text-align: center;
+  }
+  
+  .card-body p {
+    margin: 5px 0;
+    
+  }
+  
+  .inscri {
+    background-color: #ff0000;
+    color: white;
+    padding: 5px;
+    border: 2px solid #000000;
+    border-radius: 50px;
+    font-weight: bold;
+  }
+  
+  .btninscri{
+      /* Agregar esta regla para centrar el botón dentro del contenedor */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px; /* Espacio entre el contenido y el botón */
+  }
+  
+  
+  
+  .card-body {
+    display: flex;
+    justify-content: center;
+}
+
+.image-container {
+    /* Adjust the width as needed */
+    width: 30%;
+}
+
+.contenidos {
+    /* Adjust the width as needed */
+    width: 50%;
+}
+
+.btninscri {
+    /* Adjust the width as needed */
+    width: 20%;
+}
+
+  
+
+h3, h4 {
+    margin: 0;
+}
+
+p {
+ margin: 0;
+}
+

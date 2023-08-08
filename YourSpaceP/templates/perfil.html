@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil de Usuario</title>
+  <link rel="stylesheet" href="/public/perfil.css">
+  <link rel="stylesheet" href="/public/menu.css">
 </head>
 <body>
-    
+  <!-- Incluir la barra de menú -->
+  {% include 'menu.html' %}
+
+  <div class="container">
+    <main>
+      <div class="imagen">
+        <img src="https://img.freepik.com/vector-premium/dibujos-animados-perfil-mujer_18591-58476.jpg" alt="Profile Picture" style="max-width: 400px;">
+      </div>
+      <div class="profile-info">
+        {% for x in datosp %}
+        <h2 class="username">{{ x[0] }}</h2>
+        <p class="name">{{ x[1] }}</p>
+        <p class="name">{{ x[2] }}</p>
+        <p class="option"><a href="#">Cambiar Password</a></p>
+        {% endfor %}
+      </div>
+    </main>
+  </div>
 </body>
 </html>

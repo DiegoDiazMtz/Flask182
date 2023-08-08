@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/public/index.css">
+    <link rel="stylesheet" href="/public/cursos.css">
+
+
+    <style>
+
+        .custom-navbar {
+            margin-top: 0;
+        }
+
+        .custom-navbar2 {
+            margin-bottom: 0;
+        }
+          
+
+    </style>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <title>Plantilla</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg custom-navbar2" style="background-color: red;">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color:rgb(255, 255, 255)" href="/index">
+                <i class="bi bi-person-workspace" readonly style="color:rgb(255, 255, 255)"></i>
+                YourSpace
+            </a>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" style="color:rgb(255, 255, 255)" href="/cursos">Crear
+                            Curso</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:rgb(255, 255, 255)" href="/ccreado">Cursos Creados</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search" style="position:absolute; left: 50%; transform: translate(-50%, 0);" action="/search" method="POST">
+                    <input name="busq" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
+                
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="color:rgb(255, 255, 255)" href="/perfil" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Perfil
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <div class="container">
+                                <main>
+                                    <div class="imagen">
+                                        <img src="https://img.freepik.com/vector-premium/dibujos-animados-perfil-mujer_18591-58476.jpg"
+                                            alt="Profile Picture" style="max-width: 400px;">
+                                    </div>
+                                    <div class="profile-info">
+                                        {% for x in perf %}
+                                            <h2 class="username">{{ x[0] }}</h2>
+                                            <p class="name">{{ x[1] }}</p>
+                                            <p class="name">{{ x[2] }}</p>
+                                            <p class="option"><a href="#">Cambiar Password</a></p>
+                                        {% endfor %}
+                                        <li><p class="option"><a href="#">Cambiar Password</a></p></li>
+                                    </div>   
+                                    <div>
+                                        <a href="/cerrar_sesion" class="btn btn-outline-danger" style="display: center; text-align: center;">Cerrar Sesión</a>   
+                                    </div>                                 
+                                </main>
+                            </div>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="" style="display: flex; justify-content: center; background: white; margin-bottom: 40px;" >
+        <nav class="navbar custom-navbar" style="margin-bottom: 0;">
+            <div class="justify-content-center align-items-center">
+                <ul>
+                    <li class="nav-item"><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li class="nav-item"><a href="{{ url_for('cinscrito') }}">Cursos Incritos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    {%block body%}
+
+    {%endblock%}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+
+
+
+.user-actions a {
+    background-color: #ff0000;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+    color: #FFFFFF;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container input,
+
+textarea, 
+.btn-submit {
+max-width: 80%;
+}
+
+.container {
+    justify-content: center;
+    width: 900px;
+    margin: 0 auto;
+    padding: 0 auto;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.title {
+    text-align: center;
+    color: #333333;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    color: #333333;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 2px;
+    border: 1px solid #CCCCCC;
+    font-size: 16px;
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 2px;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+
+
+
+  
+  h1{
+    background-color: #ff0000;
+    border-radius: 30px;
+    padding: 5px 10px;
+    color: white;
+    font-weight: bolder;
+  }
+
+  .conjutos{
+    border-radius: 30px;
+    padding: 5px 10px;
+
+  }
+  .contenedor {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto;
+    
+  }
+
+  
+
+  .contenidos {
+    padding-right:5px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    text-align: right;
+    margin-right: 10px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid #CCCCCC;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  
+  input{
+    border-radius: 30px;
+  }
+
+  select{
+    border-radius: 30px;
+    }

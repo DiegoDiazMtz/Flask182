@@ -1,0 +1,53 @@
+{% include 'plantilla.html' %}
+
+{%block body%}
+
+<form action="/actualizar/{{ cur[0] }}" method="POST" class="contenedor">
+  <h1 style="color: white; background-color: rgb(11, 94, 215);">Actualizar este tipo de {{ cur[7] }}</h1><br>
+
+  <div class="form-group">
+    <label for="tipo">Nuevo Tipo:</label>
+    <select name="tipo" class="form-select" style="border-radius: 50px;" values="{{ cur[8] }}">
+      <option value="Curso">Curso</option>
+      <option value="Clase">Clase</option>
+      <option value="Asesoria">Asesoría</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="materia">Nueva Materia:</label>
+    <input type="text" class="form-control" name="materia" value="{{ cur[8] }}">
+  </div>
+
+  <div class="form-group">
+    <label for="descripcion">Nueva Descripción de la Materia:</label>
+    <input type="text" class="form-control" name="descripcion" value="{{ cur[9] }}">
+  </div>
+
+  <div class="form-group">
+    <label for="fecha_hora">Nueva Fecha y Hora:</label>
+    <input type="datetime-local" style="border-radius: 50px;" class="form-control" name="fechaHora" value="{{ cur[2] }}">
+</div>
+
+  <div class="form-group">
+    <label for="lugar ">Nueva Locación:</label>
+    <input type="text" class="form-control" name="lugar" value="{{ cur[3] }}">
+
+  </div>
+
+  <div class="form-group">
+    <label for="material">Nuevo Material para la clase:</label>
+    <input type="text" class="form-control" name="material" value="{{ cur[1] }}">
+  </div>
+
+  <div class="form-group">
+    <label for="espe">Nueva especialidad:</label>
+    <input type="text" class="form-control" name="espe" value="{{ cur[4] }}">
+  </div>
+
+  <button type="submit" class="mt-3 mb-3 btn-submit btn btn-primary" style="width: 33%">Actualizar</button>
+</form>
+
+
+
+{%endblock body%}

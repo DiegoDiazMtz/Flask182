@@ -60,11 +60,15 @@ create table material_servicio_asesor_espe(
     material varchar(500)
 );
 
+
+
+
+-- drop view vw_info;
+
 select * from vw_info;
-drop view vw_info;
+
 create view vw_info as
 select distinct
-    m.id as id,
     m.material,
     sae.fecha,
     sae.lugar,
@@ -84,6 +88,8 @@ from
     inner join servicios sv on sae.id_servicio = sv.id
     inner join tipos t on sv.id_tipo = t.id
     inner join usuarios u on p.id = u.id_persona;
+*/
+
 
 -- -------------------------------------------------
 
@@ -113,40 +119,15 @@ create table estudiantes(
 create table servicio_estudiante(
 	id int not null primary key auto_increment,
 	id_servicio int not null,
-	foreign key (id_servicio) references material_servicio_asesor_espe (id) on delete cascade on update cascade,
+	foreign key (id_servicio) references servicios (id) on delete cascade on update cascade,
 	id_estudiante int not null,
 	foreign key (id_estudiante) references estudiantes (id) on delete cascade on update cascade,
     fecha datetime
 );
+	
 
 
-create view vw_allinfo as
-SELECT DISTINCT
-    m.id as id,
-    m.material,
-    sae.fecha,
-    sae.lugar,
-    se.espe,
-    u_asesor.usuario AS usuario_asesor,
-    u_estudiante.usuario AS usuario_estudiante,
-    p.correo,
-    t.tipo,
-    sv.materia,
-    sv.descripcion
-FROM
-    material_servicio_asesor_espe m
-    INNER JOIN servicio_asesor_espe sae ON m.id_servicio_asesor_espe = sae.id
-    INNER JOIN asesor_espe ae ON sae.id_asesor_espe = ae.id
-    INNER JOIN asesores a ON ae.id_asesor = a.id
-    INNER JOIN personas p ON a.id_persona = p.id
-    INNER JOIN espe se ON ae.id_espe = se.id
-    INNER JOIN servicios sv ON sae.id_servicio = sv.id
-    INNER JOIN tipos t ON sv.id_tipo = t.id
-    INNER JOIN usuarios u_asesor ON p.id = u_asesor.id_persona
-    INNER JOIN servicio_estudiante se_est ON sae.id = se_est.id_servicio
-    INNER JOIN estudiantes e ON se_est.id_estudiante = e.id
-    INNER JOIN personas p_estudiante ON e.id_persona = p_estudiante.id
-    INNER JOIN usuarios u_estudiante ON p_estudiante.id = u_estudiante.id_persona;
 
-select * from vw_allinfo;
+
+
 

@@ -1,35 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>CRUD YourSpace</title>
+    <link rel="stylesheet" href="/public/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
     {%with mensajes= get_flashed_messages() %}
-    {%if mensajes%}
-    {%for msj in mensajes%}
-    <h1 class="alert">{{ msj }}</h1>
-    {%endfor%}
-    {%endif%}
+        {%if mensajes%}
+            {%for msj in mensajes%}
+                {%if msj == 'Usuario registrado correctamente' %}
+                    <script>     
+                        Swal.fire('{{ msj }}','Click para cerrar','success')
+                    </script>
+                {%else%}
+                    <script>     
+                        Swal.fire('{{ msj }}','Click para cerrar','error')
+                    </script>
+                {%endif%}
+            {%endfor%}
+        {%endif%}
     {%endwith%}
 
-    <h1>Login</h1>
-    <form action="/comprobar" method="POST">
-        <label for="usuario">Usuario:</label>
-        <input type="text" name="usuario" placeholder="Usuario" required>
+    <div class="container">
+        <h1 class="title">Login</h1>
+        <form action="/comprobar" method="POST">
+            <div class="form-group">
+                <label for="usuario">Usuario:</label>
+                <input type="text" name="usuario" placeholder="Usuario" required>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label for="pass">Password:</label>
+                <input type="password" name="pass" placeholder="Password" required>
+            </div>
+            <br><br>
+            <button type="submit" class="btn-submit">Iniciar</button>
+        </form>
         <br><br>
-        <label for="pass">Password:</label>
-        <input type="text" name="pass" placeholder="Password" required>
+        <label for="registrarse">¿No tienes una cuenta?</label>
         <br><br>
-
-        <button type="submit">Iniciar</button>
-    </form>
-
-    <br><br>
-    <label for="registrarse">¿No tienes una cuenta?</label>
-    <br><br>
-    <a href="/registrarse">Registrarse</a>
-
+        <a href="/registrarse">Registrarse</a>
+    </div>
 </body>
+
 </html>
