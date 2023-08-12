@@ -1,0 +1,62 @@
+{% extends 'plantilla.html' %}
+
+{% block body %}
+
+
+    {%with mensajes= get_flashed_messages() %}
+        {%if mensajes%}
+            {%for msj in mensajes%}
+                <script>Swal.fire('{{msj}}', '', 'success')</script>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
+
+    <div class="Formulario">
+        <h1>Actualizar Datos Del Medico</h1>
+        <form method="post" action="/actualizarDatosDoc">
+            <div class="oculto">
+                <input name="id" type="int" value="{{ medico.0 }}" readonly>
+            </div>
+            <div class="username">
+                <input name="RFC" type="text" required value="{{ medico.1 }}" placeholder=" ">
+                <label>RFC</label>
+            </div>
+            <div class="username">
+                <input name="nombre" type="text" required value="{{ medico.2 }}" placeholder=" ">
+                <label>Nombre(s)</label>
+            </div>
+            <div class="username">
+                <input name="apellidoP" type="text" required value="{{ medico.2 }}" placeholder=" ">
+                <label>Apellido Paterno</label>
+            </div>
+            <div class="username">
+                <input name="apellidoM" type="text" required value="{{ medico.2 }}" placeholder=" ">
+                <label>Apellido Materno</label>
+            </div>
+            <div class="especial">
+                <label>Rol</label>
+                <select name="rol" required>
+                    <option value="Medico_Admin" {% if medico.5 == 'Medico_Admin' %} selected {% endif %}>Medico_Admin</option>
+                    <option value="Medico" {% if medico.5 == 'Medico' %} selected {% endif %}>Medico</option>
+                </select>
+            </div>
+            <div class="username">
+                <input name="cedulaP" type="text" required value="{{ medico.3 }}" placeholder=" " placeholder=" ">
+                <label>Cedula profesional</label>
+            </div>
+            <div class="username">
+                <input name="correo" type="text" required value="{{ medico.4 }}" placeholder=" ">
+                <label>Correo</label>
+            </div>
+            <div class="username">
+                <input name="contraseña" type="password" required value="{{ medico.6 }}" placeholder=" ">
+                <label>Contraseña</label>
+            </div>
+        
+            <button type="submit" class="boton">Actualizar</button>
+        </form>
+    </div>
+        
+
+
+{% endblock %}

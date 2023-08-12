@@ -1,0 +1,49 @@
+{% extends 'plantilla.html' %}
+
+{% block body %}
+
+    {%with mensajes= get_flashed_messages() %}
+        {%if mensajes%}
+            {%for msj in mensajes%}
+                <script>Swal.fire('{{msj}}', '', 'success')</script>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
+
+    <div class="Formulario">
+        <h1>Registrar Paciente</h1>
+        <form method="post" action="/ingresarpaciente">
+            <div class="username">
+                <input type="text" name="nombreP" placeholder=" " required>
+                <label> Nombre(s) Paciente </label>
+            </div>
+            <div class="username">
+                <input type="text" name="apellidoPP" placeholder=" " required>
+                <label> Apellido Paterno </label>
+            </div>
+            <div class="username">
+                <input type="text" name="apellidoPM" placeholder=" " required>
+                <label> Apellido Materno </label>
+            </div>
+            <div class="username">
+                <input type="date" name="fechaNP" placeholder=" " required>
+                <label> Fecha de Nacimiento </label>
+            </div>
+            <div class="username">
+                <input type="text" name="EnfermedadesP" placeholder=" " required>
+                <label> Enfermedades Cronicas </label>
+            </div>
+            <div class="username">
+                <input type="Text" name="alergiasP" placeholder=" " required>
+                <label> Alergias </label>
+            </div>
+            <div class="username">
+                <input type="text" name="antecedentesP" placeholder=" " required>
+                <label> Antecedentes familares </label>
+            </div>
+            <button type="submit"> Registrar </button>          
+        </form>
+    </div>  
+
+    
+{% endblock %}

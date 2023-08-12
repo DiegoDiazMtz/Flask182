@@ -1,0 +1,57 @@
+{% extends 'plantilla.html' %}
+
+{% block body %}
+
+    {%with mensajes= get_flashed_messages() %}
+        {%if mensajes%}
+            {%for msj in mensajes%}
+                <script>Swal.fire('{{msj}}', '', 'success')</script>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
+
+    <div class="Formulario">
+        <h1>Agregar Medicos</h1>
+        <form method="post" action="/ingresarmedico">
+            <div class="username">
+                <input name="RFC" type="text" required placeholder=" ">
+                <label>RFC</label>
+            </div>
+            <div class="username">
+                <input name="nombre" type="text" required placeholder=" ">
+                <label>Nombre(s)</label>
+            </div>
+            <div class="username">
+                <input name="apellidoP" type="text" required placeholder=" ">
+                <label>Apellido Paterno</label>
+            </div>
+            <div class="username">
+                <input name="apellidoM" type="text" required placeholder=" ">
+                <label>Apellido Materno</label>
+            </div>
+            <div class="especial">
+                <select name="rol" required>
+                    <option value="Medico_Admin">Medico_Admin</option>
+                    <option value="Medico">Medico</option>
+                </select>
+                <label>Rol</label>
+            </div>
+            <div class="username">
+                <input name="cedulaP" type="text" required placeholder=" ">
+                <label>Cedula profesional</label>
+            </div>
+            <div class="username">
+                <input name="correo" type="text" required placeholder=" ">
+                <label>Correo</label>
+            </div>
+            <div class="username">
+                <input name="contraseña" type="password" required placeholder=" ">
+                <label>Contraseña</label>
+            </div>
+
+            <button type="submit" class="boton">Agregar</button>
+        </form>
+    </div>
+
+    
+{% endblock %}
