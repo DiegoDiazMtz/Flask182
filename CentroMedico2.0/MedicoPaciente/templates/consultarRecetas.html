@@ -1,0 +1,65 @@
+{% extends 'plantilla.html' %}
+
+{% block body %}
+
+    {%with mensajes= get_flashed_messages() %}
+        {%if mensajes%}
+            {%for msj in mensajes%}
+                <script>Swal.fire('{{msj}}', '', 'error')</script>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
+
+    <div class="Formulario">
+        <h1> Consultar receta </h1>
+        <form method="post" action="/receta">
+            <div class="username">
+                <input type="text" name="nombre" placeholder=" ">
+                <label>Nombre del paciente</label>
+            </div>
+            <div class="username">
+                <input type="date" name="fecha" placeholder=" ">
+                <label>Filtrar por fecha</label>
+            </div>
+            <input type="submit" value="Buscar">
+        </form>
+        
+    </div>  
+
+    {% if datos %}
+        <div class="card-containers">
+            {% for dato in datos %}
+                <div class="mt-4 col-6">
+                    <div class="cards">
+                        <div class="card-body">
+                            <h5 class="til">{{ dato[0] }}</h5>
+                            <div class="row">
+                                <div class="cardespe col-5">
+                                    <h5> Exploracion </h5>
+                                    <p class="card-text"><strong>Fecha:</strong> {{ dato[1] }}</p>
+                                    <p class="card-text"><strong>Peso:</strong> {{ dato[2] }}</p>
+                                    <p class="card-text"><strong>Altura:</strong> {{ dato[3] }}</p>
+                                    <p class="card-text"><strong>Temperatura:</strong> {{ dato[4] }}</p>
+                                    <p class="card-text"><strong>Latidos por Minuto:</strong> {{ dato[5] }}</p>
+                                    <p class="card-text"><strong>Saturación de Oxígeno:</strong> {{ dato[6] }}</p>
+                                    <p class="card-text"><strong>Glucosa:</strong> {{ dato[7] }}</p>
+                                </div>
+                                <div class="cardespe col-5">
+                                    <h5> Diagnostico </h5>
+                                    <p class="card-text"><strong>Síntomas:</strong> {{ dato[8] }}</p>
+                                    <p class="card-text"><strong>Tratamiento:</strong> {{ dato[9] }}</p>
+                                    <p class="card-text"><strong>Estudios:</strong> {{ dato[10] }}</p>
+                                    <p class="card-text"><strong>Nombre Médico:</strong> {{ dato[11] }} {{ dato[12] }} {{ dato[13] }}</p>
+                                </div>
+                                <div class="boton-container">
+                                    <a href="imprimirReceta/{{ dato[14] }}" class="espe"><i class="bi bi-printer-fill" style="font-size: 30px;"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+  
+    {% endblock %}

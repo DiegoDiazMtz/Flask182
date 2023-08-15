@@ -1,0 +1,100 @@
+{% extends 'plantilla.html' %}
+
+{% block body %}
+
+    {%with mensajes= get_flashed_messages() %}
+        {%if mensajes%}
+            {%for msj in mensajes%}
+                <script>Swal.fire('{{msj}}', '', 'success')</script>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
+
+
+    <div class="Formulario">
+        <h1> Buscar Dr.</h1>
+        <form method="post" action="BuscarDoctor">
+            <div class="username">
+                <input type="text" required name="NombreDoc" placeholder=" ">
+                <label>Apellido o Nombre del Dr.</label>
+            </div>
+            <input type="submit" value="Buscar" class="mt-2"> 
+        </form>
+        
+        {%if result%}
+
+        <table  class="table table-success table-striped mt-5">
+            <thead>
+                <tr>
+                    <td>id</td>
+                    <td>RFC</td>
+                    <td>Nombre Completo</td>
+                    <td>Cedula Profesional</td>
+                    <td>Correo</td>
+                    <td>Rol</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                {%for datos in result%}
+                <tr>
+                    <td>{{datos[0]}}</td>
+                    <td>{{datos[1]}}</td>
+                    <td>{{datos[2]}} {{datos[3]}} {{datos[4]}}</td>
+                    <td>{{datos[5]}}</td>
+                    <td>{{datos[6]}}</td>
+                    <td>{{datos[7]}}</td>
+                    <td>
+                        <form action="actualizarDatosDocForm" method="post">
+                            <!-- Agrega un campo oculto para enviar el ID -->
+                            <input type="hidden" name="doctor_id" value="{{ datos[0] }}">
+                            <button type="submit"><i class="bi bi-pen-fill"></i></button>
+                        </form>
+                        <form action="confirmarEliminar" method="post" class="eliminar-form">
+                            <!-- Agrega un campo oculto para enviar el ID -->
+                            <input type="hidden" name="doctor_id" value="{{ datos[0] }}">
+                            <button type="button" class="eliminar-btn"><i class="bi bi-trash2-fill"></i></button>
+                        </form>
+                        <form action="eliminarDoctor" method="post" id="confirmar-form" style="display: none;">
+                            <input type="hidden" name="doctor_id" id="doctor_id">
+                        </form>
+
+                        <script>
+                            document.querySelectorAll('.eliminar-btn').forEach(btn => {
+                                btn.addEventListener('click', function (event) {
+                                    event.preventDefault(); // Evita que el formulario se envíe directamente
+                        
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "You won't be able to revert this!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes, delete it!'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Obtén el valor del doctor_id
+                                            const doctorId = event.target.closest('.eliminar-form').querySelector('[name="doctor_id"]').value;
+                                            // Actualiza el valor del doctor_id en el formulario oculto
+                                            document.getElementById('doctor_id').value = doctorId;
+                                            // Envía el formulario oculto para confirmar la eliminación
+                                            document.getElementById('confirmar-form').submit();
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                    </td>
+                                
+                </tr>
+                {%endfor%}
+            </tbody>
+
+        </table>
+
+        {%endif%}
+    </div>  
+ 
+
+{% endblock %}

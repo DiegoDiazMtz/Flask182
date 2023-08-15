@@ -60,6 +60,8 @@ create table material_servicio_asesor_espe(
     material varchar(500)
 );
 
+drop view vw_info;
+
 select * from vw_info;
 drop view vw_info;
 create view vw_info as
@@ -73,7 +75,8 @@ select distinct
     p.correo,
     t.tipo,
     sv.materia,
-    sv.descripcion
+    sv.descripcion,
+    sv.id as id_servicio
 from
     material_servicio_asesor_espe m
     inner join servicio_asesor_espe sae on m.id_servicio_asesor_espe = sae.id
@@ -119,10 +122,12 @@ create table servicio_estudiante(
     fecha datetime
 );
 
+select * from servicio_estudiante;
+
 
 create view vw_allinfo as
 SELECT DISTINCT
-    m.id as id,
+    se_est.id as id,
     m.material,
     sae.fecha,
     sae.lugar,
@@ -148,5 +153,47 @@ FROM
     INNER JOIN personas p_estudiante ON e.id_persona = p_estudiante.id
     INNER JOIN usuarios u_estudiante ON p_estudiante.id = u_estudiante.id_persona;
 
+    
 select * from vw_allinfo;
 
+/*
+select vw.* from vw_info vw 
+inner join material_servicio_asesor_espe msa on vw.id = msa.id_servicio_asesor_espe 
+inner join servicio_asesor_espe sae on msa.id_servicio_asesor_espe = sae.id 
+inner join servicio_estudiante se on sae.id_servicio = se.id_servicio 
+inner join estudiantes e on se.id_estudiante = e.id 
+inner join personas p on p.id = e.id_persona;
+
+select * from material_servicio_asesor_espe msae
+inner join servicio_asesor_espe sae on msae.id_servicio_asesor_espe = sae.id
+join servicio_estudiante se on sae.id_servicio = se.id_servicio
+;
+
+select * from vw_info where vw_info.id_servicio not in (select id_servicio from servicio_estudiante where id_estudiante in (select e.id from estudiantes e join personas p on e.id_persona = p.id where e.id <> 1));
+select * from vw_info;
+select id from estudiantes where usuario = 'diego_d';
+
+select * from estudiantes;
+select * from personas;
+select * from servicio_estudiantes;
+
+select p.id from personas p join usuarios u on p.id = u.id_persona where u.usuario = 'diego_d';
+select e.id from estudiantes e join personas p on e.id_persona = p.id;
+
+select p.* from personas p join usuarios u on p.id = u.id_persona join estudiantes e on e.id = p.id_estudiante where u.usuario = 'diego_d';
+
+select * from personas;
+select * from usuarios;
+select * from estudiantes;
+
+select id_estudiante, id_servicio from servicio_estudiante;
+
+select * from material_servicio_asesor_espe;
+select * from servicio_asesor_espe;
+select * from material_servicio_asesor_espe;
+select * from servicio_estudiante;
+drop view vw_allinfo;
+select * from material_servicio_asesor_espe;
+select * from usuarios;
+select * from estudiantes;
+*/
