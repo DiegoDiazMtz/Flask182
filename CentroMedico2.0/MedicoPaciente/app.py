@@ -7,6 +7,9 @@ from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.utils import ImageReader
+from reportlab.lib.colors import blue, black
+import bcrypt
 
 # Inicialización del servidor Flask
 app = Flask(__name__, static_folder='public', template_folder='templates')
@@ -33,26 +36,26 @@ def ingresar():
         pas = request.form['password']
         
         Clog = mysql.connection.cursor()
-        Clog.execute('select id from datos_meds where RFC=%s and contraseña =%s', (Vrfc, pas))
-        id_usuario = Clog.fetchone()
-        
-        if id_usuario:
-            session['usuario'] = id_usuario  # Establecer variable de sesión
+        Clog.execute('select id, contraseña from datos_meds where RFC=%s', (Vrfc,))
+        user_data = Clog.fetchone()
+
+        if user_data and bcrypt.checkpw(pas.encode('utf-8'), user_data[1].encode('utf-8')):
+            session['usuario'] = user_data[0]  # Establecer variable de sesión
         else:
             flash('No se encontró el usuario o contraseña', 'error')
             return redirect(url_for('login'))
         
         ccargo = mysql.connection.cursor()
-        ccargo.execute('select Rol from Datos_meds where RFC = %s and contraseña = %s', (Vrfc, pas))
+        ccargo.execute('select Rol from Datos_meds where RFC = %s', (Vrfc,))
         rol_usuario = ccargo.fetchone()
-        
+
         if rol_usuario:
-            session['rol'] = rol_usuario # Establecer la variable rol del usuario
-            print(rol_usuario)
+            session['rol'] = rol_usuario  # Establecer la variable rol del usuario
             return redirect(url_for('ConsultaPacientes'))
         else:
             flash('Hubo un error con el rol')
             return redirect(url_for('login'))
+
 
 @app.route('/cerrar_sesion')
 def cerrar_sesion():
@@ -94,27 +97,43 @@ def ingresarpaciente():
     else:
         return redirect(url_for('login'))
 
+
+    
+@app.route('/eliminarpaciente/<int:pac_id>', methods=['DELETE'])
+def eliminar_usuario(pac_id):
+
+    Celimusr = mysql.connection.cursor()
+    Celimusr.execute('delete from pacientes where id = %s', (pac_id,))
+    mysql.connection.commit()
+
+    return redirect(url_for('ConsultaPacientes'))
+    
+    
+    
+    
+
 @app.route('/ingresarmedico', methods=['POST'])
 def ingresarmedico():
-    if 'usuario' in session:
-        
-        if request.method=='POST':
-            Vrfc= request.form['RFC']
-            Vnombres= request.form['nombre']
-            VapellidoP= request.form['apellidoP']
-            VapellidoM= request.form['apellidoM']
-            Vrol= request.form['rol']
-            VcedulaP= request.form['cedulaP']
-            Vcorreo= request.form['correo']
+    if 'usuario' in session and session['rol'][0] == 'Medico_Admin':
+        if request.method == 'POST':
+            Vrfc = request.form['RFC']
+            Vnombres = request.form['nombre']
+            VapellidoP = request.form['apellidoP']
+            VapellidoM = request.form['apellidoM']
+            Vrol = request.form['rol']
+            VcedulaP = request.form['cedulaP']
+            Vcorreo = request.form['correo']
             Vcontraseña = request.form['contraseña']
 
-            CS= mysql.connection.cursor()
-            CS.execute('insert into Datos_meds (RFC, nombres, apellidoP, apellidoM, rol, Cedula_prof, Correo, contraseña) values (%s,%s,%s,%s,%s,%s,%s,%s)', (Vrfc, Vnombres, VapellidoP, VapellidoM, Vrol, VcedulaP, Vcorreo, Vcontraseña))        
+            # Encriptar la contraseña antes de guardarla
+            hashed_password = bcrypt.hashpw(Vcontraseña.encode('utf-8'), bcrypt.gensalt())
+
+            CS = mysql.connection.cursor()
+            CS.execute('insert into Datos_meds (RFC, nombres, apellidoP, apellidoM, rol, Cedula_prof, Correo, contraseña) values (%s,%s,%s,%s,%s,%s,%s,%s)', (Vrfc, Vnombres, VapellidoP, VapellidoM, Vrol, VcedulaP, Vcorreo, hashed_password))
             mysql.connection.commit()
 
             flash('Medico Agregado Correctamente')    
             return render_template('AgregarMed.html')
-    
     else:
         return redirect(url_for('login'))
 
@@ -130,7 +149,7 @@ def RegPas():
 @app.route('/AgregrarMed')
 def AgregrarMed():
     
-    if 'usuario' in session:
+    if 'usuario' in session and session['rol'][0] == 'Medico_Admin':
         return render_template('AgregarMed.html')
     else:
         return redirect(url_for('login'))
@@ -189,11 +208,13 @@ def Diagnostico():
         if request.method == 'POST':
             Videxp = request.form['idexploracion']
             Vsintomas = request.form['sintomas']
+            Vdiagnostico = request.form['diagnostico']
             Vtratamiento = request.form['tratamiento']
             Vestudios = request.form['estudios']
+
             
             CDiagnostico = mysql.connection.cursor()
-            CDiagnostico.execute('INSERT INTO Diagnosticos (id_exploracion, Sintomas, Tratamiento, Estudios) VALUES (%s, %s, %s, %s)', (Videxp, Vsintomas, Vtratamiento, Vestudios))
+            CDiagnostico.execute('INSERT INTO Diagnosticos (id_exploracion, Sintomas, Diagnostico, Tratamiento, Estudios) VALUES (%s, %s, %s, %s, %s)', (Videxp, Vsintomas, Vdiagnostico, Vtratamiento, Vestudios))
             mysql.connection.commit()
             
             VidDiag = CDiagnostico.lastrowid
@@ -203,7 +224,7 @@ def Diagnostico():
             Crecetas.execute('insert into recetas (id_exploracion, id_diagnostico) values(%s,%s)', (Videxp, idDiag))
             mysql.connection.commit()
             
-            flash('Se guardaron correctamente los datos', 'success')
+            flash('Se guardaron correctamente los datos')
             return redirect(url_for('consultarRecetas'))
             
     else:
@@ -263,7 +284,7 @@ def receta():
             if datos_receta:
                 return render_template('consultarRecetas.html', datos=datos_receta)
             else:
-                flash('No se encontraron resultados')
+                flash('1')
                 return render_template('consultarRecetas.html')
 
     else:
@@ -274,12 +295,10 @@ def imprimirReceta(id):
     if 'usuario' in session:
         id = int(id)
         CimpRec = mysql.connection.cursor()
-        CimpRec.execute("SELECT CONCAT(pac.Nombres, ' ', pac.ApellidoP, ' ', pac.ApellidoM) AS nombreCom, expl.fecha, expl.Peso, expl.Altura, expl.Temperatura, expl.Latidos_minuto, expl.Saturacion_oxigeno, Glucosa, diag.sintomas, diag.tratamiento, diag.estudios, dat.Nombres, dat.ApellidoP, dat.ApellidoM FROM Recetas re INNER JOIN Exploraciones expl ON re.id_exploracion = expl.id INNER JOIN Diagnosticos diag ON re.id_diagnostico = diag.id INNER JOIN Expedientes expe ON expl.id_paciente = expe.id_paciente INNER JOIN Pacientes pac ON expe.id_paciente = pac.id INNER JOIN datos_meds dat ON dat.id = expe.id_medico where re.id =%s", (id,))
+        CimpRec.execute("SELECT concat(dat.Nombres, ' ',dat.ApellidoP, ' ', dat.ApellidoM) as nombreDoc, CONCAT(pac.Nombres, ' ', pac.ApellidoP, ' ', pac.ApellidoM) AS nombreCom, expl.fecha, expl.Peso, expl.Altura, expl.Temperatura, expl.Latidos_minuto, expl.Saturacion_oxigeno, Glucosa, diag.sintomas, diag.tratamiento, diag.estudios, TIMESTAMPDIFF(YEAR, pac.fecha_nac, CURDATE()) AS Edad FROM Recetas re INNER JOIN Exploraciones expl ON re.id_exploracion = expl.id INNER JOIN Diagnosticos diag ON re.id_diagnostico = diag.id INNER JOIN Expedientes expe ON expl.id_paciente = expe.id_paciente INNER JOIN Pacientes pac ON expe.id_paciente = pac.id INNER JOIN datos_meds dat ON dat.id = expe.id_medico where re.id =%s", (id,))
         datosReceta = CimpRec.fetchone()
-        
-        
-        
-        c = canvas.Canvas("receta.pdf", pagesize=letter)
+    
+        c = canvas.Canvas(f"Receta-{datosReceta[1]}.pdf", pagesize=letter)
         
         page_width, page_height = letter
         margin = 50  # 1 pulgada en puntos (72 puntos por pulgada)
@@ -289,25 +308,79 @@ def imprimirReceta(id):
         box_width = page_width - 2 * margin  # Ancho completo de la página
         box_height = (page_height - 2 * margin) / 2  # Mitad del alto de la página
 
-        # Dibujar el cuadro con márgenes
-        c.rect(margin, page_height - margin - box_height, box_width, box_height)
-
         # Definir posición para el texto dentro del cuadro
         x_position = margin + 10  # 10 puntos desde la izquierda
         y_position = page_height - margin - 10  # 10 puntos desde arriba
-        
+
+         # Dibujar la imagen de fondo dentro del cuadro
+        image_path = "C:/laragon/www/CENTROMEDICO2.0/MedicoPaciente/public/images/R.jpg"
+        img_width = box_width  # Ajustar el ancho de la imagen para que encaje en el cuadro
+        img_height = box_height  # Ajustar el alto de la imagen para que encaje en el cuadro
+        c.drawImage(image_path, margin, page_height - margin - box_height, width=img_width, height=img_height)
+
         listaDatosReceta = list(datosReceta)
         listaDatosReceta = [str(item) for item in listaDatosReceta]
-    
-        # Agregar texto
-        y_position = 700
-        for dato in listaDatosReceta:
-            c.drawString(100, y_position, dato)
-            y_position -= 20
         
+        color = black
+
+        # Ajustar posición y formato del primer dato
+        first_dato = listaDatosReceta[0]
+        c.setFont('Helvetica-Bold', 13)  # Fuente en negritas y tamaño 16
+        c.setFillColor(color)  # Color azul
+        c.drawString(154, y_position - 35 , first_dato)  # Ajustar la posición X para centrar
+        
+        # Ajustar posición y formato del primer dato
+        second_dato = listaDatosReceta[1]
+        c.setFont('Helvetica', 12)  # Restablecer la fuente a tamaño 12
+        c.setFillColor(color)  # Color azul
+        c.drawString(146, y_position - 96 , second_dato)  # Ajustar la posición X para centrar
+        
+        # Ajustar posición y formato del primer dato
+        second_dato = listaDatosReceta[2]
+        c.setFillColor(color)  # Color azul
+        c.drawString(400, y_position - 116 , second_dato)  # Ajustar la posición X para centrar
+        
+        # Ajustar posición y formato del primer dato
+        second_dato = listaDatosReceta[3]
+        c.setFillColor(color)  # Color azul
+        c.drawString(202, y_position - 121 , second_dato)  # Ajustar la posición X para centrar
+        
+        # Ajustar posición y formato del primer dato
+        second_dato = listaDatosReceta[4]
+        c.setFillColor(color)  # Color azul
+        c.drawString(123, y_position - 121 , second_dato)  # Ajustar la posición X para centrar
+        
+        # Ajustar posición y formato del primer dato
+        second_dato = listaDatosReceta[5]
+        c.setFillColor(color)  # Color azul
+        c.drawString(460, y_position - 96 , second_dato)  # Ajustar la posición X para centrar
+        
+        second_dato = listaDatosReceta[9]
+        c.setFillColor(color)  # Color azul
+        c.drawString(190, y_position - 154 , second_dato)  # Ajustar la posición X para centrar
+        
+        second_dato = listaDatosReceta[10]
+        c.setFillColor(color)  # Color azul
+        c.drawString(190, y_position - 204 , second_dato)  # Ajustar la posición X para centrar
+
+        second_dato = listaDatosReceta[11]
+        c.setFillColor(color)  # Color azul
+        c.drawString(176, y_position - 253 , second_dato)  # Ajustar la posición X para centrar
+        
+        second_dato = listaDatosReceta[12]
+        c.setFillColor(color)  # Color azul
+        c.drawString(280, y_position - 121 , second_dato)  # Ajustar la posición X para centrar
+
+        # Agregar el resto de los datos
+        """for dato in listaDatosReceta[6:]:
+            c.setFont('Helvetica', 12)  # Restablecer la fuente a tamaño 12
+            c.setFillColor(blue)  # Cambiar el color de nuevo a negro
+            c.drawString(100, y_position, dato)
+            y_position -= 20 """
+
         # Guardar el contenido y cerrar el archivo PDF
         c.save()
-        
+            
         return redirect(url_for('consultarRecetas'))
 
         
@@ -317,7 +390,8 @@ def imprimirReceta(id):
 
 @app.route('/ListaDr')
 def ListaDr():
-    if 'usuario' in session:
+        
+    if 'usuario' in session and session['rol'][0] == 'Medico_Admin':
         cLisDoc = mysql.connection.cursor()
         cLisDoc.execute('select id, RFC, nombres, apellidoP, apellidoM, Cedula_prof, Correo, Rol from datos_meds')
         datosmeds = cLisDoc.fetchall()
@@ -329,7 +403,7 @@ def ListaDr():
 
 @app.route('/BuscarDoctor', methods=['POST'])
 def BuscarDoctor():
-    if 'usuario' in session:
+    if 'usuario' in session and session['rol'][0] == 'Medico_Admin':
         if request.method=='POST':
             VnombreDoc = request.form['NombreDoc']
             
@@ -349,7 +423,7 @@ def BuscarDoctor():
     
 @app.route('/actualizarDatosDocForm',  methods=['POST']) 
 def actualizarDatosDocForm():
-    if 'usuario' in session:
+    if 'usuario' in session and session['rol'][0] == 'Medico_Admin':
         if request.method=='POST':
             Vid = request.form['doctor_id']
             
@@ -365,22 +439,23 @@ def actualizarDatosDocForm():
 
 @app.route('/actualizarDatosDoc', methods=['POST'])
 def actualizarDatosDoc():
-    if 'usuario' in session:
-        
-        if request.method=='POST':
-            
-            Vid= request.form['id']
-            Vrfc= request.form['RFC']
-            Vnombres= request.form['nombre']
-            VapellidoP= request.form['apellidoP']
-            VapellidoM= request.form['apellidoM']
-            Vrol= request.form['rol']
-            VcedulaP= request.form['cedulaP']
-            Vcorreo= request.form['correo']
+    if 'usuario' in session and session['rol'][0] == 'Medico_Admin':
+        if request.method == 'POST':
+            Vid = request.form['id']
+            Vrfc = request.form['RFC']
+            Vnombres = request.form['nombre']
+            VapellidoP = request.form['apellidoP']
+            VapellidoM = request.form['apellidoM']
+            Vrol = request.form['rol']
+            VcedulaP = request.form['cedulaP']
+            Vcorreo = request.form['correo']
             Vcontraseña = request.form['contraseña']
 
-            CS= mysql.connection.cursor()
-            CS.execute('update Datos_meds set RFC=%s , nombres=%s, apellidoP=%s, apellidoM=%s, rol=%s, Cedula_prof=%s, Correo=%s, contraseña=%s where id =%s', (Vrfc, Vnombres, VapellidoP, VapellidoM, Vrol, VcedulaP, Vcorreo, Vcontraseña, Vid))        
+            # Encriptar la contraseña antes de guardarla
+            hashed_password = bcrypt.hashpw(Vcontraseña.encode('utf-8'), bcrypt.gensalt())
+
+            CS = mysql.connection.cursor()
+            CS.execute('update Datos_meds set RFC=%s , nombres=%s, apellidoP=%s, apellidoM=%s, rol=%s, Cedula_prof=%s, Correo=%s, contraseña=%s where id =%s', (Vrfc, Vnombres, VapellidoP, VapellidoM, Vrol, VcedulaP, Vcorreo, hashed_password, Vid))
             mysql.connection.commit()
 
             flash('Se han actualizado los datos correctamente')    
@@ -390,9 +465,10 @@ def actualizarDatosDoc():
         return redirect(url_for('login'))
 
 
+
 @app.route('/confirmarEliminar' , methods=['POST'])
 def confirmarEliminar():
-    if 'usuario' in session:
+    if 'usuario' in session and session['rol'][0] == 'Medico_Admin':
         if request.method == 'POST':
             Vid = request.form['doctor_id']
             return redirect(url_for('eliminarDoctor', doctor_id=Vid))
@@ -403,7 +479,7 @@ def confirmarEliminar():
 
 @app.route('/eliminarDoctor',  methods=['POST'])
 def eliminarDoctor():
-    if 'usuario' in session:
+    if 'usuario' in session and session['rol'][0] == 'Medico_Admin':
         if request.method == 'POST':
             Vid = request.form['doctor_id']
             
@@ -421,39 +497,16 @@ def eliminarDoctor():
 def buscarPaciente():
     if 'usuario' in session:
         if request.method == 'POST':
-            VnombM = request.form['NombMe']
             VnombP = request.form['NombPa']
+            Vid = session['usuario']
 
             # Verificar si se proporciona un criterio de búsqueda válido
-            if not VnombM.strip() and not VnombP.strip():
-                flash('Ingrese al menos un criterio de búsqueda')
-                return render_template('ConsultaPacientes.html')
-
-            VnombMBus = f"%{VnombM}%" if VnombM.strip() else None
-            VnombPBus = f"%{VnombP}%" if VnombP.strip() else None
-
-            # Modificar la consulta para aplicar el filtrado solo si se proporcionan valores válidos
-            consulta = "SELECT pac.id, CONCAT(pac.Nombres, ' ', pac.ApellidoP, ' ', pac.ApellidoM) AS Nombre_pac, pac.Fecha_nac, expe.Enfermedades_cronicas, expe.Alergias, expe.Antecedentes_familiares, concat(datmed.nombres,' ', datmed.apellidoP, ' ', datmed.apellidoM) as Nombre_med FROM Pacientes pac INNER JOIN Expedientes expe ON pac.id = expe.id_paciente INNER JOIN Datos_meds datmed ON expe.id_medico = datmed.id WHERE"
-
-            condiciones = []
-            parametros = []
-
-            if VnombPBus:
-                condiciones.append("(pac.Nombres LIKE %s OR pac.ApellidoP LIKE %s OR pac.ApellidoM LIKE %s)")
-                parametros.extend([VnombPBus, VnombPBus, VnombPBus])
-
-            if VnombMBus:
-                condiciones.append("(datmed.Nombres LIKE %s OR datmed.ApellidoP LIKE %s OR datmed.ApellidoM LIKE %s)")
-                parametros.extend([VnombMBus, VnombMBus, VnombMBus])
-
-            if condiciones:
-                consulta += " " + "AND".join(condiciones)
-
-            consulta += " GROUP BY pac.id;"
+            VnombPBus = f"%{VnombP}%"
 
             Cbuspa = mysql.connection.cursor()
-            Cbuspa.execute(consulta, parametros)
+            Cbuspa.execute("SELECT pac.id, CONCAT(pac.Nombres, ' ', pac.ApellidoP, ' ', pac.ApellidoM) AS Nombre_pac, pac.Fecha_nac, expe.Enfermedades_cronicas, expe.Alergias, expe.Antecedentes_familiares, concat(datmed.nombres,' ', datmed.apellidoP, ' ', datmed.apellidoM) as Nombre_med FROM Pacientes pac INNER JOIN Expedientes expe ON pac.id = expe.id_paciente INNER JOIN Datos_meds datmed ON expe.id_medico = datmed.id WHERE (pac.Nombres LIKE %s OR pac.ApellidoP LIKE %s OR pac.ApellidoM LIKE %s) AND datmed.id = %s", (VnombPBus, VnombPBus, VnombPBus, Vid))
             datosConsulta = Cbuspa.fetchall()
+            print(Vid)
 
             if datosConsulta:
                 return render_template('ConsultaPacientes.html', pacientes_data=datosConsulta)
@@ -467,11 +520,11 @@ def buscarPaciente():
 
 
 
-        
 
 
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
     app.run(port=4000, debug=True)
+
 
